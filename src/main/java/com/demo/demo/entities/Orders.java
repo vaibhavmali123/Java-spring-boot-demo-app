@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.OnDelete;
@@ -50,14 +51,19 @@ public class Orders implements Serializable{
    @OnDelete(action = OnDeleteAction.CASCADE)
     private Customer customer;
 
-	@ManyToOne(fetch = FetchType.LAZY,optional = false)
-	@JoinColumn(name = "product_id",referencedColumnName = "product_id",nullable = false)
-	private Product product;
+	/*
+	 * @Transient
+	 * 
+	 * @ManyToOne(fetch = FetchType.LAZY,optional = false)
+	 * 
+	 * @JoinColumn(name = "product_id",referencedColumnName = "product_id",nullable
+	 * = false) private Product product;
+	 */
 
 	@OneToMany(mappedBy = "orders",cascade = CascadeType.ALL)
 	private List<OrderItem>orderItems;
 	
-	public Orders(int orderId, int quantity, int price, String date, String status, Customer customer, Product product,List<OrderItem>orderItems) {
+	public Orders(int orderId, int quantity, int price, String date, String status, Customer customer, List<OrderItem>orderItems) {
 		super();
 		this.orderId = orderId;
 		this.quantity = quantity;
@@ -65,7 +71,7 @@ public class Orders implements Serializable{
 		this.date = date;
 		this.status = status;
 		this.customer = customer;
-		this.product = product;
+		//this.product = product;
 		this.orderItems=orderItems;
 	}
 
@@ -120,14 +126,11 @@ public void setCustomer(Customer customer) {
     this.customer = customer;
 }
 
-public Product getProduct() {
-	return product;
-}
-
-public void setProduct(Product product) {
-	this.product = product;
-}
-
+/*
+ * public Product getProduct() { return product; }
+ * 
+ * public void setProduct(Product product) { this.product = product; }
+ */
 
 public List<OrderItem> getOrderItems() {
 	return orderItems;

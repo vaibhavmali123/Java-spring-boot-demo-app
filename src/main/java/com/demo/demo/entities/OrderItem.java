@@ -1,5 +1,7 @@
 package com.demo.demo.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,15 +11,21 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "order_item")
-public class OrderItem {
+public class OrderItem implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
+	@JsonIgnoreProperties(value = {"product_id"}, allowSetters=true)
+	@Transient
+	int product_id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "orderId")
@@ -30,12 +38,13 @@ public class OrderItem {
 	   @Column(name="quantity")   
 	   private int quantity;
 
-	public OrderItem(int id, Orders orders, Product product, int quantity) {
+	public OrderItem(int id, Orders orders, Product product, int quantity,int product_id) {
 		super();
 		this.id = id;
 		this.orders = orders;
 		this.product = product;
 		this.quantity = quantity;
+		this.product_id=product_id;
 	}
 
 	public OrderItem() {
@@ -72,6 +81,14 @@ public class OrderItem {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	public int getProduct_id() {
+		return product_id;
+	}
+
+	public void setProduct_id(int product_id) {
+		this.product_id = product_id;
 	}
 	  
 	   

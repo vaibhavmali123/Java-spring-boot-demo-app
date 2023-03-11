@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.demo.demo.dto.OrderDTO;
+import com.demo.demo.dto.OrderListDto;
+import com.demo.demo.dto.OrderRequestDTO;
 import com.demo.demo.entities.Orders;
 import com.demo.demo.entities.Product;
 import com.demo.demo.entities.ResponseEntity;
@@ -23,17 +27,23 @@ public class OrderController {
     @GetMapping("/getAllOrders")
     public ResponseEntity getAllOrders(){
 
-        List<Orders>listOrders=orderService.getAllOrders();
+        System.out.println("********** API getAllOrders ******** Start");
+
+        List<OrderDTO>listOrders=orderService.getAllOrders();
         if(listOrders.size()>0){
           
             responseEntity.setStatusCode("200");
             responseEntity.setMessage("Success");
-            responseEntity.setList((ArrayList) listOrders);   
+            responseEntity.setList((ArrayList) listOrders);  
+            System.out.println("********** API getAllOrders Step 1 IF ********"+listOrders.size());
+
             }
             else{
                 responseEntity.setStatusCode("500");
                 responseEntity.setMessage("No Orders Found");
-                responseEntity.setList(null);;   
+                responseEntity.setList(null);
+                System.out.println("********** API getAllOrders Step 1 Else no orders found********");
+
             }
         return  responseEntity;
     }
@@ -41,10 +51,16 @@ public class OrderController {
     @PostMapping("order/{customerId}/saveOrder/{productId}")
     public ResponseEntity saveOrder(@PathVariable(value = "customerId")int customerId,
     		@PathVariable(value = "productId")int productId,
-    		@RequestBody Orders orders){
+    		@RequestBody OrderListDto orders){
         //System.out.println("SSSSSSSSMMM   idddd"+orders.getProduct().getProductId());
 
-        orderService.saveOrders(orders,customerId,productId);
+    	System.out.println("SSSSSSSSMMM   idddd"+orders.getOrderDTOList().size());
+
+    	System.out.println("SSSSSSSSMMM   idddd"+orders.getOrderDTOList().get(0).getDate());
+
+    	System.out.println("SSSSSSSSMMM   idddd"+orders.getOrderDTOList().get(0).getPrice());
+
+        orderService.saveOrders(orders,customerId);
         responseEntity.setStatusCode("200");
         responseEntity.setMessage("Success");
         
