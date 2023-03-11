@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.demo.dto.OrderDTO;
+import com.demo.demo.dto.OrderItemDTO;
 import com.demo.demo.dto.OrderListDto;
 import com.demo.demo.dto.OrderRequestDTO;
 import com.demo.demo.entities.Orders;
@@ -76,5 +77,28 @@ public class OrderController {
         responseEntity.setMessage("Success");
         
         return responseEntity;
+    }
+    
+    @GetMapping("/getBill/{customerId}")
+    public ResponseEntity getBill(@PathVariable(value = "customerId")int customerId) {
+    	
+		List<OrderItemDTO>listResponse=orderService.getBill(customerId);
+    	
+		 if(listResponse.size()>0){
+	          
+	            responseEntity.setStatusCode("200");
+	            responseEntity.setMessage("Success");
+	            responseEntity.setList((ArrayList) listResponse);  
+	            System.out.println("********** API getBill Step 1 IF ********"+listResponse.size());
+
+	            }
+	            else{
+	                responseEntity.setStatusCode("500");
+	                responseEntity.setMessage("No Orders Bills Found");
+	                responseEntity.setList(null);
+	                System.out.println("********** API getBill Step 1 Else no orders found********");
+
+	            }
+    	return responseEntity;
     }
 }

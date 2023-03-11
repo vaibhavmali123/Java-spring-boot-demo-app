@@ -28,7 +28,10 @@ public class Product implements Serializable{
 	@Column(name = "product_name")
 	private String productName;
 	
-
+	@Column(name = "price")
+	private int price;
+	
+	
 	@Column(name = "created_date")
 	private String createdDate;
 	
@@ -39,13 +42,14 @@ public class Product implements Serializable{
 	List<Orders>Orders;
 
 	public Product(int productId,String productName, String createdDate, String updatedDate,
-			List<com.demo.demo.entities.Orders> orders) {
+			List<com.demo.demo.entities.Orders> orders,int price) {
 		super();
 		this.productId = productId;
 		this.productName = productName;
 		this.createdDate = createdDate;
 		this.updatedDate = updatedDate;
 		Orders = orders;
+		this.price=price;
 	}
 	
 	
@@ -94,6 +98,18 @@ public class Product implements Serializable{
 
 	public void setOrders(List<Orders> orders) {
 		Orders = orders;
+	}
+
+
+
+	public int getPrice() {
+		return price;
+	}
+
+
+
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
 	

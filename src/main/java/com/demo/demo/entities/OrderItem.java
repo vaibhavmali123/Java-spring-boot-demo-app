@@ -23,9 +23,9 @@ public class OrderItem implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@JsonIgnoreProperties(value = {"product_id"}, allowSetters=true)
-	@Transient
-	int product_id;
+	/*
+	 * @JsonIgnoreProperties(value = {"product_id"}) int product_id;
+	 */
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "orderId")
@@ -44,7 +44,7 @@ public class OrderItem implements Serializable{
 		this.orders = orders;
 		this.product = product;
 		this.quantity = quantity;
-		this.product_id=product_id;
+		//this.product_id=product_id;
 	}
 
 	public OrderItem() {
@@ -83,13 +83,11 @@ public class OrderItem implements Serializable{
 		this.quantity = quantity;
 	}
 
-	public int getProduct_id() {
-		return product_id;
-	}
-
-	public void setProduct_id(int product_id) {
-		this.product_id = product_id;
-	}
+	/*
+	 * public int getProduct_id() { return product_id; }
+	 * 
+	 * public void setProduct_id(int product_id) { this.product_id = product_id; }
+	 */
 	  
 	   
 }

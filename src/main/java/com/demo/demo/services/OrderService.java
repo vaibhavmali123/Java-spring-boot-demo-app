@@ -1,4 +1,5 @@
 package com.demo.demo.services;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -13,6 +14,7 @@ import com.demo.demo.entities.Product;
 import com.demo.demo.dao.OrderRepository;
 import com.demo.demo.dao.ProductRepository;
 import com.demo.demo.dto.OrderDTO;
+import com.demo.demo.dto.OrderItemDTO;
 import com.demo.demo.dto.OrderListDto;
 import com.demo.demo.dto.OrderRequestDTO;
 import com.demo.demo.dao.CustomerRepository;
@@ -70,12 +72,12 @@ public class OrderService {
     //     orders.setCustomer(customer);
 //         orders.setProduct(product);
          
-
+         java.util.Date date=new java.util.Date();
          
          List<OrderRequestDTO>listOrderItems=orderListDto.getOrderDTOList();
          Orders orders=new Orders();
          orders.setCustomer(customer);
-         orders.setDate(listOrderItems.get(0).getDate());
+         orders.setDate(date.toString());
          orders.setPrice(listOrderItems.get(0).getPrice());
          orders.setQuantity(listOrderItems.get(0).getQuantity());
          orders.setStatus(listOrderItems.get(0).getStatus());
@@ -102,7 +104,6 @@ public class OrderService {
              orderItem.setOrders(ordersItem);
         	 orderItemRepository.save(orderItem);
          }
-         System.out.println("PRD ID !!!"+listOrderItems.get(0).getQuantity());
 
     
          
@@ -118,4 +119,41 @@ public class OrderService {
 
          return products;
     }
+
+	public List<OrderItemDTO> getBill(int customerId) {
+		// TODO Auto-generated method stub
+		List<OrderItemDTO>listResponse=new ArrayList<OrderItemDTO>();
+		
+		List<Orders>listOrders=orderRepository.findByCustomerId(customerId);
+		
+        System.out.println("getProductId ID !orrrddeerr!!"+listOrders.size());
+        
+       
+        for(Orders item:listOrders) {
+        	
+        OrderItem orderItem=orderItemRepository.findByOrderId(item.getOrderId());
+        
+        System.out.println("*****pppppp00"+item.getOrderId());
+
+        if(orderItem!=null) {
+         
+        	
+            Product product=orderItem.getProduct();
+
+           OrderItemDTO orderItemDTO=new OrderItemDTO();
+           
+           orderItemDTO.setProductName(product.getProductName());
+           orderItemDTO.setDate(item.getDate());
+           orderItemDTO.setQuantity(orderItem.getQuantity());
+           orderItemDTO.setPrice(product.getPrice());
+           orderItemDTO.setStatus(item.getStatus());
+ 
+           
+           listResponse.add(orderItemDTO);
+        	
+        }
+        }
+
+		return listResponse;
+	}
 }
