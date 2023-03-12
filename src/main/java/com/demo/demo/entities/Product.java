@@ -20,7 +20,7 @@ import javax.persistence.Table;
 public class Product implements Serializable{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "product_id")
 	private int productId;
 	
@@ -38,17 +38,18 @@ public class Product implements Serializable{
 	@Column(name = "updated_date")
 	private String updatedDate;
 
-	@OneToMany(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY,orphanRemoval = true)
-	List<Orders>Orders;
-
+	/*
+	 * @OneToMany(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY,orphanRemoval
+	 * = true) List<Orders>Orders;
+	 */
 	public Product(int productId,String productName, String createdDate, String updatedDate,
-			List<com.demo.demo.entities.Orders> orders,int price) {
+			int price) {
 		super();
 		this.productId = productId;
 		this.productName = productName;
 		this.createdDate = createdDate;
 		this.updatedDate = updatedDate;
-		Orders = orders;
+		//Orders = orders;
 		this.price=price;
 	}
 	
@@ -92,13 +93,11 @@ public class Product implements Serializable{
 		this.updatedDate = updatedDate;
 	}
 
-	public List<Orders> getOrders() {
-		return Orders;
-	}
-
-	public void setOrders(List<Orders> orders) {
-		Orders = orders;
-	}
+	/*
+	 * public List<Orders> getOrders() { return Orders; }
+	 * 
+	 * public void setOrders(List<Orders> orders) { Orders = orders; }
+	 */
 
 
 

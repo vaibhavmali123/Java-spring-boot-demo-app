@@ -29,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Orders implements Serializable{
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="orderId")   
    private int orderId;
 

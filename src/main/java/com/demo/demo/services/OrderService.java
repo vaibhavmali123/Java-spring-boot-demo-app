@@ -3,6 +3,9 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
@@ -17,12 +20,15 @@ import com.demo.demo.dto.OrderDTO;
 import com.demo.demo.dto.OrderItemDTO;
 import com.demo.demo.dto.OrderListDto;
 import com.demo.demo.dto.OrderRequestDTO;
+import com.demo.demo.controllers.OrderController;
 import com.demo.demo.dao.CustomerRepository;
 import com.demo.demo.dao.OrderItemRepository;
 
 @Component
 public class OrderService {
-    
+	private static final Logger logger = LogManager.getLogger(OrderController.class);
+
+	
     @Autowired
     private OrderRepository orderRepository;
 
@@ -38,6 +44,8 @@ public class OrderService {
     
     public List<OrderDTO> getAllOrders(){
        
+    	logger.info("********** Service  getAllOrders ******** Start");
+
     	OrderDTO orderDTO=new OrderDTO();
         List<OrderDTO> listOrdersDTO=new ArrayList();
     	
@@ -56,22 +64,18 @@ public class OrderService {
 
         	listOrdersDTO.add(orderDTO);
         }
-        
+    	logger.info("********** Service  getAllOrders ******** End"+listOrders.size());
+
             return listOrdersDTO;
     }
 
     public Orders saveOrders(OrderListDto orderListDto,int customerId){
                 
-          System.out.println("********** saveOrders Service ******** Start"+customerId);
+    	logger.info("********** Service  saveOrders ******** Start");
 
          Customer customer=customerRepository.findById(customerId);
-         //Product product=productRepository.findById(productId);
          OrderItem orderItem=new OrderItem();
-         
-         
-    //     orders.setCustomer(customer);
-//         orders.setProduct(product);
-         
+                  
          java.util.Date date=new java.util.Date();
          
          List<OrderRequestDTO>listOrderItems=orderListDto.getOrderDTOList();
@@ -82,9 +86,8 @@ public class OrderService {
          orders.setQuantity(listOrderItems.get(0).getQuantity());
          orders.setStatus(listOrderItems.get(0).getStatus());
          
-         
          Orders orderResponse=orderRepository.save(orders);
-         System.out.println("********** Order Saved ******** ");
+     	logger.info("********** Service saveOrders order saved ******** ");
 
          for(OrderRequestDTO item:listOrderItems) {
              System.out.println("********** saveOrders ******** Ieration"+customerId);
@@ -103,41 +106,46 @@ public class OrderService {
 
              orderItem.setOrders(ordersItem);
         	 orderItemRepository.save(orderItem);
-         }
+         	logger.info("********** Service saveOrders orderItem saved********");
 
-    
-         
-         
+         }
+     	logger.info("********** Service  saveOrders ******** End");
+
          return orders;
     }
     
     public Product saveProduct(Product product){
 
+    	logger.info("********** Service  saveProduct ******** Start");
+
     	Product products=new Product();
                
     	products=productRepository.save(product);
+
+    	logger.info("********** Service  saveProduct ******** End");
 
          return products;
     }
 
 	public List<OrderItemDTO> getBill(int customerId) {
 		// TODO Auto-generated method stub
+    	logger.info("********** Service getBill ******** Start");
+
 		List<OrderItemDTO>listResponse=new ArrayList<OrderItemDTO>();
 		
 		List<Orders>listOrders=orderRepository.findByCustomerId(customerId);
 		
-        System.out.println("getProductId ID !orrrddeerr!!"+listOrders.size());
+    	logger.info("********** Service getBill listOrders********"+listOrders.size());
         
        
         for(Orders item:listOrders) {
         	
         OrderItem orderItem=orderItemRepository.findByOrderId(item.getOrderId());
         
-        System.out.println("*****pppppp00"+item.getOrderId());
+    	logger.info("********** Service getBill getOrderId********"+item.getOrderId());
 
         if(orderItem!=null) {
          
-        	
             Product product=orderItem.getProduct();
 
            OrderItemDTO orderItemDTO=new OrderItemDTO();
@@ -147,12 +155,12 @@ public class OrderService {
            orderItemDTO.setQuantity(orderItem.getQuantity());
            orderItemDTO.setPrice(product.getPrice());
            orderItemDTO.setStatus(item.getStatus());
- 
            
            listResponse.add(orderItemDTO);
         	
         }
         }
+    	logger.info("********** Service getBill End ********");
 
 		return listResponse;
 	}
