@@ -31,6 +31,12 @@ public class Product implements Serializable{
 	@Column(name = "price")
 	private int price;
 	
+	@Column(name = "quantity")
+	private int quantity;
+	
+	
+	@Column(name = "comment")
+	private String comment;
 	
 	@Column(name = "created_date")
 	private String createdDate;
@@ -38,12 +44,15 @@ public class Product implements Serializable{
 	@Column(name = "updated_date")
 	private String updatedDate;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "categoryId")
+	private Category category;
 	/*
 	 * @OneToMany(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY,orphanRemoval
 	 * = true) List<Orders>Orders;
 	 */
 	public Product(int productId,String productName, String createdDate, String updatedDate,
-			int price) {
+			int price,Category category,String comment,int quantity) {
 		super();
 		this.productId = productId;
 		this.productName = productName;
@@ -51,9 +60,24 @@ public class Product implements Serializable{
 		this.updatedDate = updatedDate;
 		//Orders = orders;
 		this.price=price;
+		this.category=category;
+		this.comment=comment;
+		this.quantity=quantity;
 	}
 	
 	
+
+	public Category getCategory() {
+		return category;
+	}
+
+
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+
 
 	public Product() {
 		super();
@@ -109,6 +133,30 @@ public class Product implements Serializable{
 
 	public void setPrice(int price) {
 		this.price = price;
+	}
+
+
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+
+
+	public String getComment() {
+		return comment;
+	}
+
+
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	

@@ -15,6 +15,7 @@ import com.demo.demo.dto.OrderDTO;
 import com.demo.demo.dto.OrderItemDTO;
 import com.demo.demo.dto.OrderListDto;
 import com.demo.demo.dto.OrderRequestDTO;
+import com.demo.demo.dto.ProductRequestDTO;
 import com.demo.demo.entities.Orders;
 import com.demo.demo.entities.Product;
 import com.demo.demo.entities.ResponseEntity;
@@ -76,11 +77,11 @@ public class OrderController {
     }
     
     @PostMapping("/saveProduct")
-    public ResponseEntity saveProduct(@RequestBody Product product){
+    public ResponseEntity saveProduct(@RequestBody ProductRequestDTO productRequestDTO){
 
     	logger.info("********** API  saveProduct ******** Start");
 
-        orderService.saveProduct(product);
+        orderService.saveProduct(productRequestDTO);
         responseEntity.setStatusCode("200");
         responseEntity.setMessage("Success");
         

@@ -33,12 +33,11 @@ public class Orders implements Serializable{
     @Column(name="orderId")   
    private int orderId;
 
-   @Column(name="quantity")   
-   private int quantity;
-   
-   @Column(name="price")   
-   private int price;
-
+	/*
+	 * @Column(name="quantity") private int quantity;
+	 * 
+	 * @Column(name="price") private int price;
+	 */
    @Column(name="date")   
    private String date;
 
@@ -66,8 +65,8 @@ public class Orders implements Serializable{
 	public Orders(int orderId, int quantity, int price, String date, String status, Customer customer, List<OrderItem>orderItems) {
 		super();
 		this.orderId = orderId;
-		this.quantity = quantity;
-		this.price = price;
+	//	this.quantity = quantity;
+	//	this.price = price;
 		this.date = date;
 		this.status = status;
 		this.customer = customer;
@@ -87,22 +86,16 @@ public void setOrderId(int orderId) {
     this.orderId = orderId;
 }
 
-public int getQuantity() {
-    return quantity;
-}
-
-public void setQuantity(int quantity) {
-    this.quantity = quantity;
-}
-
-public int getPrice() {
-    return price;
-}
-
-public void setPrice(int price) {
-    this.price = price;
-}
-
+/*
+ * public int getQuantity() { return quantity; }
+ * 
+ * public void setQuantity(int quantity) { this.quantity = quantity; }
+ */
+/*
+ * public int getPrice() { return price; }
+ * 
+ * public void setPrice(int price) { this.price = price; }
+ */
 public String getDate() {
     return date;
 }
