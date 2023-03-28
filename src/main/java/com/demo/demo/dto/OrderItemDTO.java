@@ -1,5 +1,7 @@
 package com.demo.demo.dto;
 
+import java.util.Date;
+
 public class OrderItemDTO {
 
 	
@@ -9,7 +11,7 @@ public class OrderItemDTO {
 	
 	private String  productName;
 	
-	private String date;
+	private Date date;
 	
 	private String status;
 
@@ -21,7 +23,7 @@ public class OrderItemDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrderItemDTO(int quantity, String productName, String date, String status,int price,int total) {
+	public OrderItemDTO(int quantity, String productName, Date date, String status,int price,int total) {
 		super();
 		this.quantity = quantity;
 		this.productName = productName;
@@ -55,11 +57,11 @@ public class OrderItemDTO {
 		this.productName = productName;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 

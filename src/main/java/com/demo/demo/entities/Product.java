@@ -1,6 +1,7 @@
 package com.demo.demo.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,6 +15,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "product")
@@ -38,21 +43,31 @@ public class Product implements Serializable{
 	@Column(name = "comment")
 	private String comment;
 	
+	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd/MM/yyyy")
 	@Column(name = "created_date")
-	private String createdDate;
+	private Date createdDate;
 	
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd/MM/yyyy")
 	@Column(name = "updated_date")
-	private String updatedDate;
+	private Date updatedDate;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "categoryId")
 	private Category category;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "subCategoryId")
+	private Subcategory subcategory;
+	
 	/*
 	 * @OneToMany(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY,orphanRemoval
 	 * = true) List<Orders>Orders;
 	 */
-	public Product(int productId,String productName, String createdDate, String updatedDate,
-			int price,Category category,String comment,int quantity) {
+	public Product(int productId,String productName, Date createdDate, Date updatedDate,
+			int price,Category category,String comment,int quantity,Subcategory subcategory) {
 		super();
 		this.productId = productId;
 		this.productName = productName;
@@ -63,6 +78,7 @@ public class Product implements Serializable{
 		this.category=category;
 		this.comment=comment;
 		this.quantity=quantity;
+		this.subcategory=subcategory;
 	}
 	
 	
@@ -101,19 +117,19 @@ public class Product implements Serializable{
 		this.productName = productName;
 	}
 
-	public String getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(String createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
-	public String getUpdatedDate() {
+	public Date getUpdatedDate() {
 		return updatedDate;
 	}
 
-	public void setUpdatedDate(String updatedDate) {
+	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 
@@ -157,6 +173,27 @@ public class Product implements Serializable{
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+
+
+	public Subcategory getSubcategory() {
+		return subcategory;
+	}
+
+
+
+	public void setSubcategory(Subcategory subcategory) {
+		this.subcategory = subcategory;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Product [productId=" + productId + ", productName=" + productName + ", price=" + price + ", quantity="
+				+ quantity + ", comment=" + comment + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate
+				+ ", category=" + category + ", subcategory=" + subcategory + "]";
 	}
 
 	

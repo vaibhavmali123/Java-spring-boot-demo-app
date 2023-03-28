@@ -1,5 +1,6 @@
 package com.demo.demo.entities;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,12 +17,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -38,8 +42,10 @@ public class Orders implements Serializable{
 	 * 
 	 * @Column(name="price") private int price;
 	 */
+   @Temporal(TemporalType.TIMESTAMP)
+   @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd/MM/yyyy")
    @Column(name="date")   
-   private String date;
+   private Date date;
 
    @Column(name="status")   
    private String status;
@@ -62,7 +68,7 @@ public class Orders implements Serializable{
 	@OneToMany(mappedBy = "orders",cascade = CascadeType.ALL)
 	private List<OrderItem>orderItems;
 	
-	public Orders(int orderId, int quantity, int price, String date, String status, Customer customer, List<OrderItem>orderItems) {
+	public Orders(int orderId, int quantity, int price, Date date, String status, Customer customer, List<OrderItem>orderItems) {
 		super();
 		this.orderId = orderId;
 	//	this.quantity = quantity;
@@ -96,11 +102,11 @@ public void setOrderId(int orderId) {
  * 
  * public void setPrice(int price) { this.price = price; }
  */
-public String getDate() {
+public Date getDate() {
     return date;
 }
 
-public void setDate(String date) {
+public void setDate(Date date) {
     this.date = date;
 }
 

@@ -4,6 +4,9 @@ public class ProductRequestDTO {
 
 	
 private int categoryId;	
+
+private int subCategoryId;	
+
 private String productName;
 
 private int price;
@@ -22,7 +25,7 @@ public ProductRequestDTO() {
 }
 
 public ProductRequestDTO(String productName, int price, String updatedDate, String createdDate, int quantity,
-		String comment,int categoryId) {
+		String comment,int categoryId,int subCategoryId) {
 	super();
 	this.productName = productName;
 	this.price = price;
@@ -31,6 +34,7 @@ public ProductRequestDTO(String productName, int price, String updatedDate, Stri
 	this.quantity = quantity;
 	this.comment = comment;
 	this.categoryId=categoryId;
+	this.subCategoryId=subCategoryId;
 }
 
 public String getProductName() {
@@ -87,6 +91,21 @@ public int getCategoryId() {
 
 public void setCategoryId(int categoryId) {
 	this.categoryId = categoryId;
+}
+
+public int getSubCategoryId() {
+	return subCategoryId;
+}
+
+public void setSubCategoryId(int subCategoryId) {
+	this.subCategoryId = subCategoryId;
+}
+
+@Override
+public String toString() {
+	return "ProductRequestDTO [categoryId=" + categoryId + ", subCategoryId=" + subCategoryId + ", productName="
+			+ productName + ", price=" + price + ", updatedDate=" + updatedDate + ", createdDate=" + createdDate
+			+ ", quantity=" + quantity + ", comment=" + comment + "]";
 }
 
 

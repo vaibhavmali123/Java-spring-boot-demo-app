@@ -1,13 +1,17 @@
 package com.demo.demo.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.demo.demo.entities.Customer;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class OrderDTO implements Serializable{
@@ -26,8 +30,10 @@ public class OrderDTO implements Serializable{
 	@JsonProperty("price")
 	   private int price;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd/MM/yyyy")
 	@JsonProperty("date")
-	   private String date;
+	   private Date date;
 
 	@JsonProperty("status")
 	   private String status;
@@ -46,7 +52,7 @@ public class OrderDTO implements Serializable{
 		this.customerName = customerName;
 	}
 
-	public OrderDTO(int productId, int customerId, int quantity, int price, String date, String status,
+	public OrderDTO(int productId, int customerId, int quantity, int price, Date date, String status,
 			String customerName,Customer customer) {
 		super();
 		this.productId = productId;
@@ -79,11 +85,11 @@ public class OrderDTO implements Serializable{
 		this.price = price;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 

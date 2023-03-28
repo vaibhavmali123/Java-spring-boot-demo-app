@@ -1,5 +1,6 @@
 package com.demo.demo.entities;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -9,6 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Category {
@@ -21,9 +26,17 @@ public class Category {
 	@Column(name = "categoryName")
 	private String categoryName;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd/MM/yyyy")
 	@Column(name = "createdDate")
-	private String createdDate;
+	private Date createdDate;
 
+	@Column(name = "isActive")
+	private boolean isActive;
+	
+	@Column(name = "sequence")
+	private int sequence;
+	
 	/*
 	 * @OneToMany(mappedBy = "category") private List<Product>listProducts;
 	 */
@@ -35,11 +48,13 @@ public class Category {
 
 	
 
-	public Category(int categoryId, String categoryName, String createdDate, List<Product> listProducts) {
+	public Category(int categoryId, String categoryName, Date createdDate, List<Product> listProducts) {
 		super();
 		this.categoryId = categoryId;
 		this.categoryName = categoryName;
 		this.createdDate = createdDate;
+		this.isActive=isActive;
+		this.sequence=sequence;
 		//this.listProducts = listProducts;
 	}
 
@@ -59,12 +74,34 @@ public class Category {
 		this.categoryName = categoryName;
 	}
 
-	public String getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(String createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
+	}
+
+
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
+
+	public int getSequence() {
+		return sequence;
+	}
+
+
+	public void setSequence(int sequence) {
+		this.sequence = sequence;
 	}
 
 

@@ -1,8 +1,8 @@
 package com.demo.demo.services;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Date;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,8 +15,10 @@ import com.demo.demo.entities.Customer;
 import com.demo.demo.entities.OrderItem;
 import com.demo.demo.entities.Orders;
 import com.demo.demo.entities.Product;
+import com.demo.demo.entities.Subcategory;
 import com.demo.demo.dao.OrderRepository;
 import com.demo.demo.dao.ProductRepository;
+import com.demo.demo.dao.SubCategoryRepository;
 import com.demo.demo.dto.OrderDTO;
 import com.demo.demo.dto.OrderItemDTO;
 import com.demo.demo.dto.OrderListDto;
@@ -46,6 +48,9 @@ public class OrderService {
 
     @Autowired
 	CategoryRepository categoryRepository;
+    
+    @Autowired
+    SubCategoryRepository subCategoryRepository;
 
     public List<OrderDTO> getAllOrders(){
        
@@ -61,7 +66,7 @@ public class OrderService {
         	orderDTO.setCustomerId(ordersItem.getCustomer().getId());
         	Customer customer=customerRepository.findById(ordersItem.getCustomer().getId());
         	
-        	orderDTO.setDate(ordersItem.getDate());
+        	orderDTO.setDate(new Date());
         	orderDTO.setStatus(ordersItem.getStatus());
         	orderDTO.setCustomer(customer);
 
@@ -83,7 +88,7 @@ public class OrderService {
          List<OrderRequestDTO>listOrderItems=orderListDto.getOrderDTOList();
          Orders orders=new Orders();
          orders.setCustomer(customer);
-         orders.setDate(date.toString());
+         orders.setDate(new Date());
          orders.setStatus(listOrderItems.get(0).getStatus());
          Orders orderResponse=orderRepository.save(orders);
          
@@ -120,14 +125,16 @@ public class OrderService {
 
     	Product product=new Product();
         Category category=categoryRepository.findById(productRequestDTO.getCategoryId());       
-    	
+    	Subcategory subcategory=subCategoryRepository.findById(productRequestDTO.getSubCategoryId());
+        
     	product.setCategory(category);
     	product.setProductName(productRequestDTO.getProductName());
-    	product.setUpdatedDate(productRequestDTO.getUpdatedDate());
+    	product.setUpdatedDate(new Date());
 
     	product.setPrice(productRequestDTO.getPrice());
-    	product.setCreatedDate(productRequestDTO.getCreatedDate());
+    	product.setCreatedDate(new Date());
 
+    	product.setSubcategory(subcategory);
     	product.setQuantity(productRequestDTO.getQuantity());
     	product.setComment(productRequestDTO.getComment());
     	Product productrs=productRepository.save(product);
@@ -161,7 +168,7 @@ public class OrderService {
            OrderItemDTO orderItemDTO=new OrderItemDTO();
            
            orderItemDTO.setProductName(product.getProductName());
-           orderItemDTO.setDate(item.getDate());
+           orderItemDTO.setDate(new Date());
            orderItemDTO.setQuantity(orderItem.getQuantity());
            orderItemDTO.setPrice(product.getPrice());
            orderItemDTO.setStatus(item.getStatus());
