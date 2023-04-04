@@ -19,13 +19,15 @@ private int quantity;
 
 private String comment;
 
+private String productImage;
+
 public ProductRequestDTO() {
 	super();
 	// TODO Auto-generated constructor stub
 }
 
 public ProductRequestDTO(String productName, int price, String updatedDate, String createdDate, int quantity,
-		String comment,int categoryId,int subCategoryId) {
+		String comment,int categoryId,int subCategoryId,String productImage) {
 	super();
 	this.productName = productName;
 	this.price = price;
@@ -35,6 +37,7 @@ public ProductRequestDTO(String productName, int price, String updatedDate, Stri
 	this.comment = comment;
 	this.categoryId=categoryId;
 	this.subCategoryId=subCategoryId;
+	this.productImage=productImage;
 }
 
 public String getProductName() {
@@ -101,11 +104,20 @@ public void setSubCategoryId(int subCategoryId) {
 	this.subCategoryId = subCategoryId;
 }
 
+
+public String getProductImage() {
+	return productImage;
+}
+
+public void setProductImage(String productImage) {
+	this.productImage = productImage;
+}
+
 @Override
 public String toString() {
 	return "ProductRequestDTO [categoryId=" + categoryId + ", subCategoryId=" + subCategoryId + ", productName="
 			+ productName + ", price=" + price + ", updatedDate=" + updatedDate + ", createdDate=" + createdDate
-			+ ", quantity=" + quantity + ", comment=" + comment + "]";
+			+ ", quantity=" + quantity + ", comment=" + comment + ", productImage=" + productImage + "]";
 }
 
 

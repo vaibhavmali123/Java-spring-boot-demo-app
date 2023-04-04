@@ -43,6 +43,10 @@ public class Product implements Serializable{
 	@Column(name = "comment")
 	private String comment;
 	
+
+	@Column(name = "productImage")
+	private String productImage;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd/MM/yyyy")
 	@Column(name = "created_date")
@@ -67,7 +71,7 @@ public class Product implements Serializable{
 	 * = true) List<Orders>Orders;
 	 */
 	public Product(int productId,String productName, Date createdDate, Date updatedDate,
-			int price,Category category,String comment,int quantity,Subcategory subcategory) {
+			int price,Category category,String comment,int quantity,Subcategory subcategory,String productImage) {
 		super();
 		this.productId = productId;
 		this.productName = productName;
@@ -79,6 +83,7 @@ public class Product implements Serializable{
 		this.comment=comment;
 		this.quantity=quantity;
 		this.subcategory=subcategory;
+		this.productImage=productImage;
 	}
 	
 	
@@ -189,11 +194,23 @@ public class Product implements Serializable{
 
 
 
+	public String getProductImage() {
+		return productImage;
+	}
+
+
+
+	public void setProductImage(String productImage) {
+		this.productImage = productImage;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "Product [productId=" + productId + ", productName=" + productName + ", price=" + price + ", quantity="
-				+ quantity + ", comment=" + comment + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate
-				+ ", category=" + category + ", subcategory=" + subcategory + "]";
+				+ quantity + ", comment=" + comment + ", productImage=" + productImage + ", createdDate=" + createdDate
+				+ ", updatedDate=" + updatedDate + ", category=" + category + ", subcategory=" + subcategory + "]";
 	}
 
 	
