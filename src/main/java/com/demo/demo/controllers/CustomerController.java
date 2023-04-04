@@ -27,6 +27,12 @@ public class CustomerController {
     
     ResponseEntity responseEntity=new ResponseEntity();
 
+    @GetMapping("/getTestAPI")
+    public String gatTestAPI() {
+    	
+    	return "Success";
+    }
+
     @GetMapping("/getCustomers")
     public ResponseEntity getCustomers(){
     	logger.info("********** API  getCustomers ******** Start");
