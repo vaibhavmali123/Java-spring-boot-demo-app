@@ -119,31 +119,6 @@ public class OrderService {
          return orders;
     }
     
-    public Product saveProduct(ProductRequestDTO productRequestDTO){
-
-    	logger.info("********** Service  saveProduct ******** Start");
-
-    	Product product=new Product();
-        Category category=categoryRepository.findById(productRequestDTO.getCategoryId());       
-    	Subcategory subcategory=subCategoryRepository.findById(productRequestDTO.getSubCategoryId());
-        
-    	product.setCategory(category);
-    	product.setProductName(productRequestDTO.getProductName());
-    	product.setUpdatedDate(new Date());
-
-    	product.setPrice(productRequestDTO.getPrice());
-    	product.setCreatedDate(new Date());
-
-    	product.setSubcategory(subcategory);
-    	product.setQuantity(productRequestDTO.getQuantity());
-    	product.setComment(productRequestDTO.getComment());
-    	Product productrs=productRepository.save(product);
-
-    	logger.info("********** Service  saveProduct ******** End"+productRequestDTO.getQuantity());
-
-         return productrs;
-    }
-
 	public List<OrderItemDTO> getBill(int customerId) {
 		// TODO Auto-generated method stub
     	logger.info("********** Service getBill ******** Start");

@@ -1,8 +1,9 @@
 E:\Projects\web services\New folder\demo\src\main\java\com\demo\demo\dto\OrderDTO.java
-E:\Projects\web services\New folder\demo\src\main\java\com\demo\demo\controllers\SubCategoryController.java
+E:\Projects\web services\New folder\demo\src\main\java\com\demo\demo\controllers\SubcategoryController.java
 E:\Projects\web services\New folder\demo\src\main\java\com\demo\demo\services\FileService.java
 E:\Projects\web services\New folder\demo\src\main\java\com\demo\demo\services\CustomerService.java
 E:\Projects\web services\New folder\demo\src\main\java\com\demo\demo\entities\Category.java
+E:\Projects\web services\New folder\demo\src\main\java\com\demo\demo\dto\SubCategoryRequestDTO.java
 E:\Projects\web services\New folder\demo\src\main\java\com\demo\demo\dao\OrderRepository.java
 E:\Projects\web services\New folder\demo\src\main\java\com\demo\demo\dto\OrderItemDTO.java
 E:\Projects\web services\New folder\demo\src\main\java\com\demo\demo\dao\OrderItemRepository.java

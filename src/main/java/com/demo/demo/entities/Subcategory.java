@@ -25,6 +25,16 @@ import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
 @Table(name = "subCategory")
 public class Subcategory {
 
+	public int getSubCategoryId() {
+		return subCategoryId;
+	}
+
+
+	public void setSubCategoryId(int subCategoryId) {
+		this.subCategoryId = subCategoryId;
+	}
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "subCategoryId")
@@ -75,11 +85,11 @@ public class Subcategory {
 		this.subCategoryId = subCategoryId;
 	}
 
-	public String getCategoryName() {
+	public String getSubCategoryName() {
 		return subCategoryName;
 	}
 
-	public void setCategoryName(String subCategoryName) {
+	public void setSubCategoryName(String subCategoryName) {
 		this.subCategoryName = subCategoryName;
 	}
 

@@ -1,13 +1,15 @@
 package com.demo.demo.controllers;
 
-import java.util.ArrayList;
+import java.util.ArrayList;import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.demo.demo.dto.ResponseDTO.CategoryResponseDTO;
 import com.demo.demo.entities.Category;
 import com.demo.demo.entities.ResponseEntity;
 import com.demo.demo.services.CategoryService;
@@ -36,8 +38,7 @@ public class CategoryController {
 		}
 		else {
 			responseEntity.setStatusCode("504");
-	           responseEntity.setMessage("Failed");
-	            
+	           responseEntity.setMessage("Failed");    
 		
 		}
 		   
@@ -45,4 +46,26 @@ public class CategoryController {
 		
 	}
 	
+	@GetMapping("getAllCategories")
+	public ResponseEntity getCategories()
+	{
+		
+		List<CategoryResponseDTO>listCategoryCategories=categoryService.getCategories();
+		
+				if(listCategoryCategories.size()>0) {
+					
+					responseEntity.setStatusCode("200");
+					responseEntity.setMessage("Success");
+					responseEntity.setList((ArrayList)listCategoryCategories);
+				}
+				else {
+					responseEntity.setStatusCode("500");
+					responseEntity.setMessage("Failed to fetch categories");
+					responseEntity.setList((ArrayList)listCategoryCategories);
+					
+				}
+		
+		return responseEntity;
+	}
+
 }

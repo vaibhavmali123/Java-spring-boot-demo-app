@@ -1,5 +1,7 @@
 package com.demo.demo.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -10,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.demo.demo.entities.Customer;
 import com.demo.demo.entities.OrderItem;
 import com.demo.demo.entities.Product;
+import com.demo.demo.entities.Subcategory;
 
 @EnableTransactionManagement
 public interface ProductRepository extends CrudRepository<Product,Integer>{
@@ -21,4 +24,8 @@ public interface ProductRepository extends CrudRepository<Product,Integer>{
     @Transactional
     @Query(value =  "UPDATE product p SET p.quantity=:quantity WHERE p.product_id=:product_id",nativeQuery = true)
     int updateProductById(@Param("product_id") int product_id,@Param("quantity") int quantity);
+
+    @Query(value = "SELECT * FROM product WHERE category_id=:categoryId and sub_category_id=:subCategoryId",nativeQuery = true)
+	List<Product>findAllBycategoryId(@Param("categoryId") int categoryId,@Param("subCategoryId") int subCategoryId);
+
 }
