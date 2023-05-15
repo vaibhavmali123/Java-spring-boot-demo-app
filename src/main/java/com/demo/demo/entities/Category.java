@@ -106,13 +106,11 @@ public class Category {
 
 
 
-	/*
-	 * public List<Product> getListProducts() { return listProducts; }
-	 * 
-	 * 
-	 * public void setListProducts(List<Product> listProducts) { this.listProducts =
-	 * listProducts; }
-	 */
+	@Override
+	public String toString() {
+		return "Category [categoryId=" + categoryId + ", categoryName=" + categoryName + ", createdDate=" + createdDate
+				+ ", isActive=" + isActive + ", sequence=" + sequence + "]";
+	}
 
 	
 }

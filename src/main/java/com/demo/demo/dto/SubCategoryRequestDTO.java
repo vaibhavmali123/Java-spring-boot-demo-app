@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class SubCategoryRequestDTO {
 
 	@JsonProperty("categoryId")
-		private int categoryId;
+	private int categoryId;
 
 	@JsonProperty("isActive")
 	private boolean isActive;
@@ -21,6 +21,12 @@ public class SubCategoryRequestDTO {
 	@JsonProperty("sequence")
 	private int sequence;
 	
+	@Override
+	public String toString() {
+		return "SubCategoryRequestDTO [categoryId=" + categoryId + ", isActive=" + isActive + ", sequence=" + sequence
+				+ ", subCategoryName=" + subCategoryName + "]";
+	}
+
 	@JsonProperty("subCategoryName")
 	private String subCategoryName;
 

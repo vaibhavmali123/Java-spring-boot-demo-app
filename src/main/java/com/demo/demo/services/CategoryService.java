@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.demo.demo.dao.CategoryRepository;
+import com.demo.demo.dto.CategoryDTO;
 import com.demo.demo.dto.ResponseDTO.CategoryResponseDTO;
 import com.demo.demo.entities.Category;
 
@@ -18,11 +19,17 @@ public class CategoryService {
 	CategoryRepository categoryRepository;
 	
 	
-public Category saveCategories(Category categoryReq) {
+public Category saveCategories(CategoryDTO categoryReq) {
 	
+	Category categoryObj=new Category();
 	
-	categoryReq.setCreatedDate(new Date());
-	Category category=categoryRepository.save(categoryReq);
+	categoryObj.setCategoryName(categoryReq.getCategoryName());
+	categoryObj.setSequence(categoryReq.getSequence());
+	categoryObj.setCreatedDate(new Date());
+	categoryObj.setActive(true);
+	
+	//categoryReq.setCreatedDate(new Date());
+	Category category=categoryRepository.save(categoryObj);
 	
 	return category;
 }

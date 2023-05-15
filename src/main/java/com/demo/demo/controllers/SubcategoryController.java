@@ -29,6 +29,7 @@ public class SubcategoryController {
     
     ResponseEntity responseEntity=new ResponseEntity();
 
+
 	 @PostMapping("/addSubCategory")
 	    public ResponseEntity addSubCategory(@RequestBody SubCategoryRequestDTO subCategoryRequestDTO) {
 

@@ -7,14 +7,15 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.demo.demo.dto.CategoryDTO;
 import com.demo.demo.dto.ResponseDTO.CategoryResponseDTO;
 import com.demo.demo.entities.Category;
 import com.demo.demo.entities.ResponseEntity;
 import com.demo.demo.services.CategoryService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 public class CategoryController {
@@ -25,22 +26,28 @@ public class CategoryController {
     CategoryService categoryService;
     
 	@PostMapping("/saveCategory")
-	public ResponseEntity saveCategory(@RequestBody Category categoryReq) {
+	public ResponseEntity saveCategory(@RequestBody CategoryDTO categoryReq) {
 		
+    	logger.info("********** API saveCategory ******** Start");
+
+       	logger.info("********** API saveCategory req  ******** "+categoryReq.getCategoryName());
+
 		Category category=categoryService.saveCategories(categoryReq);
-		
-		
+
+
 		
 		if (category!=null) {
 			responseEntity.setStatusCode("200");
 	           responseEntity.setMessage("Success");
-	            
+	       	logger.info("********** API saveCategory saved  ******** "+category.getCategoryName());
+  
 		}
 		else {
 			responseEntity.setStatusCode("504");
 	           responseEntity.setMessage("Failed");    
 		
 		}
+    	logger.info("********** API saveCategory ******** End");
 		   
 		return responseEntity;
 		
