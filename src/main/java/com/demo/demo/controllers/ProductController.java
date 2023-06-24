@@ -42,13 +42,14 @@ public class ProductController {
     @Autowired
     SubCategoryService subCategoryService;
 
-    ResponseEntity responseEntity=new ResponseEntity();
 
     @Autowired
     ProductService productService;
     
 	 @PostMapping("/saveProduct")
 	    public ResponseEntity saveProduct(@RequestBody ProductRequestDTO productRequestDTO){
+
+		    ResponseEntity responseEntity=new ResponseEntity();
 
 	    	logger.info("********** API  saveProduct ******** Start");
 
@@ -62,19 +63,31 @@ public class ProductController {
 	    }
 	 
 	 @GetMapping("getProductsById")
-		public ResponseEntity getSubCategoriesById(
+		public ResponseEntity getProductsById(
 				@RequestParam(value = "categoryId")int categoryId,@RequestParam(value = "subCategoryId")int subCategoryId)
 		{
-			
-			List<ProductsResponseDTO>productList=productService.getProductsById(categoryId,subCategoryId);
+		    ResponseEntity responseEntity=new ResponseEntity();
+	    	logger.info("********** API  getProductsById ******** Start");
+	    	
+	    	List<ProductsResponseDTO>productList=new ArrayList<ProductsResponseDTO>();
+	    	
+	    	if (subCategoryId!=0) {
+	    		productList= productService.getProductsById(categoryId,subCategoryId);
+			}
+	    	else {
+	    		productList= productService.getProductsByCategoryId(categoryId);
+
+	    	}
 			
 					if(productList.size()>0) {
 						
+				    	logger.info("********** API  getProductsById ******** End"+productList.size());
 						responseEntity.setStatusCode("200");
 						responseEntity.setMessage("Success");
 						responseEntity.setList((ArrayList)productList);
 					}
 					else {
+				    	logger.info("********** API  getProductsById from else ******** End"+productList.size());
 						responseEntity.setStatusCode("500");
 						responseEntity.setMessage("Failed to fetch categories");
 						

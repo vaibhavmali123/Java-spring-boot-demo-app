@@ -72,7 +72,7 @@ public class OrderController {
     	logger.info("********** API  saveOrder ******** Start"+orders.getOrderDTOList().size());
 
 
-        orderService.saveOrders(orders,customerId);
+        orderService.saveOrders(orders,customerId,productId);
         responseEntity.setStatusCode("200");
         responseEntity.setMessage("Success");
         

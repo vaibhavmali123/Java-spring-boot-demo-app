@@ -26,6 +26,9 @@ public interface ProductRepository extends CrudRepository<Product,Integer>{
     int updateProductById(@Param("product_id") int product_id,@Param("quantity") int quantity);
 
     @Query(value = "SELECT * FROM product WHERE category_id=:categoryId and sub_category_id=:subCategoryId",nativeQuery = true)
-	List<Product>findAllBycategoryId(@Param("categoryId") int categoryId,@Param("subCategoryId") int subCategoryId);
+	List<Product>findAllById(@Param("categoryId") int categoryId,@Param("subCategoryId") int subCategoryId);
+
+    @Query(value = "SELECT * FROM product WHERE category_id=:categoryId",nativeQuery = true)
+   	List<Product>findAllBycategoryId(@Param("categoryId") int categoryId);
 
 }

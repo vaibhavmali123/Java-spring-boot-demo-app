@@ -77,7 +77,7 @@ public class OrderService {
             return listOrdersDTO;
     }
 
-    public Orders saveOrders(OrderListDto orderListDto,int customerId){
+    public Orders saveOrders(OrderListDto orderListDto,int customerId,int productId){
                 
     	logger.info("********** Service  saveOrders ******** Start");
 
@@ -92,7 +92,7 @@ public class OrderService {
          orders.setStatus(listOrderItems.get(0).getStatus());
          Orders orderResponse=orderRepository.save(orders);
          
-     	logger.info("********** Service saveOrders order saved ******** ");
+     	logger.info("********** Service saveOrders order saving order product ******** ");
 
          for(OrderRequestDTO item:listOrderItems) {
             

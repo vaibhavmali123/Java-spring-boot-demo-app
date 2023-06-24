@@ -64,7 +64,33 @@ public class ProductService {
     	
     List<ProductsResponseDTO>productsListResponse =  new ArrayList<ProductsResponseDTO>();
     
-    	List<Product>productsList=productRepository.findAllBycategoryId(categoryId,subCategoryId);
+    	List<Product>productsList=productRepository.findAllById(categoryId,subCategoryId);
+    	
+    	
+    	for(Product product:productsList) {
+    		
+    		ProductsResponseDTO productsResponseDTO=new ProductsResponseDTO();
+    		
+    		productsResponseDTO.setCategoryId(product.getCategory().getCategoryId());
+    		productsResponseDTO.setSubCategoryId(product.getSubcategory().getCategoryId());
+    		
+    		productsResponseDTO.setProductName(product.getProductName());
+    		productsResponseDTO.setProductImage(product.getProductImage());
+    		productsResponseDTO.setProductId(product.getProductId());
+    		productsResponseDTO.setPrice(product.getPrice());
+    		productsResponseDTO.setQuantity(product.getQuantity());
+    		productsResponseDTO.setComment(product.getComment());
+    		
+    		productsListResponse.add(productsResponseDTO);
+    	}
+    	return productsListResponse;
+    }
+
+    public List<ProductsResponseDTO> getProductsByCategoryId(int categoryId) {
+    	
+    List<ProductsResponseDTO>productsListResponse =  new ArrayList<ProductsResponseDTO>();
+    
+    	List<Product>productsList=productRepository.findAllBycategoryId(categoryId);
     	
     	
     	for(Product product:productsList) {
