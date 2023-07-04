@@ -24,6 +24,8 @@ import com.demo.demo.dto.OrderItemDTO;
 import com.demo.demo.dto.OrderListDto;
 import com.demo.demo.dto.OrderRequestDTO;
 import com.demo.demo.dto.ProductRequestDTO;
+import com.demo.demo.dto.ResponseDTO.ProductsResponseDTO;
+import com.demo.demo.dto.ResponseDTO.ordersDTO.OrdersResponseDTO;
 import com.demo.demo.controllers.OrderController;
 import com.demo.demo.dao.CategoryRepository;
 import com.demo.demo.dao.CustomerRepository;
@@ -52,25 +54,54 @@ public class OrderService {
     @Autowired
     SubCategoryRepository subCategoryRepository;
 
-    public List<OrderDTO> getAllOrders(){
+    public List<OrdersResponseDTO> getAllOrders(){
        
     	logger.info("********** Service  getAllOrders ******** Start");
 
     	OrderDTO orderDTO=new OrderDTO();
-        List<OrderDTO> listOrdersDTO=new ArrayList();
+        List<OrdersResponseDTO> listOrdersDTO=new ArrayList();
     	
         List<Orders>listOrders=(List<Orders>) orderRepository.findAll();
         
+        if(listOrders.size()>0) {
+        	
+        }
         for(Orders ordersItem:listOrders) {
         	
-        	orderDTO.setCustomerId(ordersItem.getCustomer().getId());
+        	OrdersResponseDTO ordersResponseDTO=new OrdersResponseDTO();
+        	
+        	ordersResponseDTO.setOrderId(ordersItem.getOrderId());
+        	ordersResponseDTO.setStatus(ordersItem.getStatus());
+        	List<OrderItem>listItems=ordersItem.getOrderItems();
+        	//ordersResponseDTO.setListItem(listItems);
+        	for(OrderItem orderItem:listItems) {
+        			
+        			ProductsResponseDTO productResponse=  new ProductsResponseDTO(); 
+        			productResponse.setQuantity(orderItem.getQuantity());
+        			List<Product> productsList=productRepository.findProductByProductID(orderItem.getProduct().getProductId());
+        			for(Product product:productsList)
+        			{
+        				productResponse.setProductName(product.getProductName());
+        				productResponse.setPrice(product.getPrice());
+        				productResponse.setProductName(product.getComment());
+        				productResponse.setProductId(product.getProductId());
+        				productResponse.setProductImage(product.getProductImage());
+
+        			}
+                	ordersResponseDTO.setProductsResponseDTO(productResponse);
+
+        	}
+        	
+        	logger.info("********** Service  getAllOrders ******** End"+ordersItem.getOrderItems().size());
+        	logger.info("********** Service  getAllOrders ******** End"+listItems.size());
+
+        	
         	Customer customer=customerRepository.findById(ordersItem.getCustomer().getId());
         	
-        	orderDTO.setDate(new Date());
-        	orderDTO.setStatus(ordersItem.getStatus());
-        	orderDTO.setCustomer(customer);
+        	ordersResponseDTO.setDate(new Date());
+        	ordersResponseDTO.setCustomer(customer);
 
-        	listOrdersDTO.add(orderDTO);
+        	listOrdersDTO.add(ordersResponseDTO);
         }
     	logger.info("********** Service  getAllOrders ******** End"+listOrders.size());
 
@@ -109,7 +140,7 @@ public class OrderService {
              orderItem.setOrders(ordersItem);
         	 orderItemRepository.save(orderItem);
         	 
-        	 productRepository.updateProductById(productItem.getProductId(),productItem.getQuantity()-item.getQuantity());
+        	 productRepository.updateProductQuantityById(productItem.getProductId(),productItem.getQuantity()-item.getQuantity());
         	 
          	logger.info("********** Service saveOrders orderItem saved********"+item.getQuantity());
 
@@ -156,4 +187,37 @@ public class OrderService {
 
 		return listResponse;
 	}
+	
+	public List<OrderItemDTO> getBillByOrderId(int orderId) {
+		// TODO Auto-generated method stub
+    	logger.info("********** Service getBill ******** Start");
+
+		List<OrderItemDTO>listResponse=new ArrayList<OrderItemDTO>();
+		
+		
+		  OrderItem orderItem=orderItemRepository.findByOrderId(orderId);
+	       
+	    	logger.info("********** Service getBill getOrderId********"+orderId);
+
+	        if(orderItem!=null) {
+	         
+	            Product product=orderItem.getProduct();
+
+	           OrderItemDTO orderItemDTO=new OrderItemDTO();
+	           
+	           orderItemDTO.setProductName(product.getProductName());
+	           orderItemDTO.setDate(new Date());
+	           orderItemDTO.setQuantity(orderItem.getQuantity());
+	           orderItemDTO.setPrice(product.getPrice());
+	           orderItemDTO.setStatus("paid");
+	           //orderItemDTO.setTotal(product.getPrice()*item.getQuantity());
+	           listResponse.add(orderItemDTO);
+	        	
+	        }
+
+    	logger.info("********** Service getBill End ********");
+
+		return listResponse;
+	}
+
 }

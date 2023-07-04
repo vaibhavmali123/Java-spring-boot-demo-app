@@ -97,4 +97,29 @@ public class SubcategoryController {
 			return responseEntity;
 		}
 
+		@PostMapping("updateSubCategory")
+		public ResponseEntity updateSubCategory(@RequestParam(value = "subCategoryName")String subCategoryName,@RequestParam(value = "subCategoryId")int subCategoryId) {
+		    	logger.info("********** API updateCategories ******** START");
+
+				try {
+					
+					int result=subCategoryService.updateSubCategory(subCategoryName,subCategoryId);
+					
+					if(result>0) {
+						
+						responseEntity.setStatusCode("200");
+						responseEntity.setMessage("Success");
+					}
+					else {
+						responseEntity.setStatusCode("500");
+						responseEntity.setMessage("Failed to fetch categories");
+					}
+				}
+				catch (Exception e) {
+			    	logger.info("********** API updateCategories ******** END");
+				}
+		    	logger.info("********** API updateCategories ******** END");
+				return responseEntity;
+			}
+
 }

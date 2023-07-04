@@ -17,6 +17,7 @@ import com.demo.demo.dto.OrderListDto;
 import com.demo.demo.dto.OrderRequestDTO;
 import com.demo.demo.dto.ProductRequestDTO;
 import com.demo.demo.dto.SubCategoryRequestDTO;
+import com.demo.demo.dto.ResponseDTO.ordersDTO.OrdersResponseDTO;
 import com.demo.demo.entities.Orders;
 import com.demo.demo.entities.Product;
 import com.demo.demo.entities.ResponseEntity;
@@ -42,7 +43,7 @@ public class OrderController {
 
     	logger.info("********** API getAllOrders ******** Start");
 
-        List<OrderDTO>listOrders=orderService.getAllOrders();
+        List<OrdersResponseDTO>listOrders=orderService.getAllOrders();
         if(listOrders.size()>0){
           
             responseEntity.setStatusCode("200");
@@ -84,7 +85,7 @@ public class OrderController {
     
        
     @GetMapping("/getBill/{customerId}")
-    public ResponseEntity getBill(@PathVariable(value = "customerId")int customerId) {
+    public ResponseEntity getBillByCustomerId(@PathVariable(value = "customerId")int customerId) {
     	
     	logger.info("********** API  getBill ******** Start");
 
@@ -108,6 +109,33 @@ public class OrderController {
 
     	return responseEntity;
     }
+
     
+    @GetMapping("/getBillByOrderId/{orderId}")
+    public ResponseEntity getBillByOrderId(@PathVariable(value = "orderId")int orderId) {
+    	
+    	logger.info("********** API  getBill ******** Start");
+
+		List<OrderItemDTO>listResponse=orderService.getBillByOrderId(orderId);
+    	
+		 if(listResponse.size()>0){
+	          
+	            responseEntity.setStatusCode("200");
+	            responseEntity.setMessage("Success");
+	            responseEntity.setList((ArrayList) listResponse);  
+
+	            }
+	            else{
+	                responseEntity.setStatusCode("500");
+	                responseEntity.setMessage("No Orders Bills Found");
+	                responseEntity.setList(null);
+	                System.out.println("********** API getBill Step 1 Else no orders found********");
+
+	            }
+	    	logger.info("********** API  getBill ******** End");
+
+    	return responseEntity;
+    }
+
        
 }

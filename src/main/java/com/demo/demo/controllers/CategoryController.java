@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.demo.dto.CategoryDTO;
@@ -28,27 +29,32 @@ public class CategoryController {
 	@PostMapping("/saveCategory")
 	public ResponseEntity saveCategory(@RequestBody CategoryDTO categoryReq) {
 		
-    	logger.info("********** API saveCategory ******** Start");
+		try {
+			logger.info("********** API saveCategory ******** Start");
 
-       	logger.info("********** API saveCategory req  ******** "+categoryReq.getCategoryName());
+	       	logger.info("********** API saveCategory req  ******** "+categoryReq.getCategoryName());
 
-		Category category=categoryService.saveCategories(categoryReq);
+			Category category=categoryService.saveCategories(categoryReq);
 
 
-		
-		if (category!=null) {
-			responseEntity.setStatusCode("200");
-	           responseEntity.setMessage("Success");
-	       	logger.info("********** API saveCategory saved  ******** "+category.getCategoryName());
-  
+			
+			if (category!=null) {
+				responseEntity.setStatusCode("200");
+		           responseEntity.setMessage("Success");
+		       	logger.info("********** API saveCategory saved  ******** "+category.getCategoryName());
+	  
+			}
+			else {
+				responseEntity.setStatusCode("504");
+		           responseEntity.setMessage("Failed");    
+			
+			}
+	    	logger.info("********** API saveCategory ******** End");
+
 		}
-		else {
-			responseEntity.setStatusCode("504");
-	           responseEntity.setMessage("Failed");    
-		
+		catch (Exception e) {
+	    	logger.info("********** API saveCategory ******** End"+e.getMessage());
 		}
-    	logger.info("********** API saveCategory ******** End");
-		   
 		return responseEntity;
 		
 	}
@@ -56,23 +62,72 @@ public class CategoryController {
 	@GetMapping("getAllCategories")
 	public ResponseEntity getCategories()
 	{
-		
-		List<CategoryResponseDTO>listCategoryCategories=categoryService.getCategories();
-		
-				if(listCategoryCategories.size()>0) {
-					
-					responseEntity.setStatusCode("200");
-					responseEntity.setMessage("Success");
-					responseEntity.setList((ArrayList)listCategoryCategories);
-				}
-				else {
-					responseEntity.setStatusCode("500");
-					responseEntity.setMessage("Failed to fetch categories");
-					responseEntity.setList((ArrayList)listCategoryCategories);
-					
-				}
+		try {
+			List<CategoryResponseDTO>listCategoryCategories=categoryService.getCategories();
+			
+			if(listCategoryCategories.size()>0) {
+				
+				responseEntity.setStatusCode("200");
+				responseEntity.setMessage("Success");
+				responseEntity.setList((ArrayList)listCategoryCategories);
+			}
+			else {
+				responseEntity.setStatusCode("500");
+				responseEntity.setMessage("Failed to fetch categories");
+				responseEntity.setList((ArrayList)listCategoryCategories);						
+			}
+
+		}
+		catch (Exception e) {
+	    	logger.info("********** API getAllCategories ******** END"+e.getMessage());
+			}
 		
 		return responseEntity;
 	}
 
+	@PostMapping("updateCategories")
+public ResponseEntity updateCategories(@RequestParam(value = "categoryName")String categoryName,@RequestParam(value = "categoryId")int categoryId) {
+    	logger.info("********** API updateCategories ******** START");
+
+		try {
+			
+			int result=categoryService.updateCategories(categoryName,categoryId);
+			
+			if(result>0) {
+				
+				responseEntity.setStatusCode("200");
+				responseEntity.setMessage("Success");
+			}
+			else {
+				responseEntity.setStatusCode("500");
+				responseEntity.setMessage("Failed to fetch categories");
+			}
+		}
+		catch (Exception e) {
+	    	logger.info("********** API updateCategories ******** END");
+		}
+    	logger.info("********** API updateCategories ******** END");
+		return responseEntity;
+	}
+	@PostMapping("deleteCategory")
+	public ResponseEntity deleteCategory(@RequestParam(value = "categoryId")int categoryId) {
+	    	logger.info("********** API deleteCategory ******** START");
+
+			try {
+				
+				categoryService.deleteCategory(categoryId);
+				
+				
+					responseEntity.setStatusCode("200");
+					responseEntity.setMessage("Success");
+				
+			}
+			catch (Exception e) {
+		    	logger.info("********** API deleteCategory ******** END");
+			}
+	    	logger.info("********** API deleteCategory ******** END");
+			return responseEntity;
+		}
+
 }
+

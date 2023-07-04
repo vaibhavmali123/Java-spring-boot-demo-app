@@ -41,6 +41,7 @@ public class ProductController {
 
     @Autowired
     SubCategoryService subCategoryService;
+    ResponseEntity responseEntity=new ResponseEntity();
 
 
     @Autowired
@@ -56,7 +57,7 @@ public class ProductController {
 	        productService.saveProduct(productRequestDTO);
 	        responseEntity.setStatusCode("200");
 	        responseEntity.setMessage("Success");
-	        
+	  
 	    	logger.info("********** API  saveProduct ******** End"+productRequestDTO.getProductName());
 
 	        return responseEntity;
@@ -66,7 +67,6 @@ public class ProductController {
 		public ResponseEntity getProductsById(
 				@RequestParam(value = "categoryId")int categoryId,@RequestParam(value = "subCategoryId")int subCategoryId)
 		{
-		    ResponseEntity responseEntity=new ResponseEntity();
 	    	logger.info("********** API  getProductsById ******** Start");
 	    	
 	    	List<ProductsResponseDTO>productList=new ArrayList<ProductsResponseDTO>();
@@ -78,7 +78,6 @@ public class ProductController {
 	    		productList= productService.getProductsByCategoryId(categoryId);
 
 	    	}
-			
 					if(productList.size()>0) {
 						
 				    	logger.info("********** API  getProductsById ******** End"+productList.size());
@@ -89,11 +88,47 @@ public class ProductController {
 					else {
 				    	logger.info("********** API  getProductsById from else ******** End"+productList.size());
 						responseEntity.setStatusCode("500");
-						responseEntity.setMessage("Failed to fetch categories");
-						
+						responseEntity.setMessage("Failed to fetch products");
 					}
 			
 			return responseEntity;
 		}
+	 @PostMapping("updateProduct")
+	 public ResponseEntity updateProduct(@RequestBody ProductRequestDTO productRequestDTO,@RequestParam(value = "productId")int productId) {
+	    	logger.info("********** API  updateProduct ******** START");
+
+		 try {
+			 
+			 int result=productService.updateProduct(productRequestDTO,productId);
+			 if(result>0) {
+					responseEntity.setStatusCode("200");
+					responseEntity.setMessage("Success");
+				}
+				else {
+					responseEntity.setStatusCode("500");
+					responseEntity.setMessage("Failed to fetch categories");
+				}
+			
+		} catch (Exception e) {
+	    	logger.info("********** API  updateProduct ******** END"+e.getMessage());
+		}
+	    	logger.info("********** API  updateProduct ******** END");
+		return responseEntity;
+	 }
+	 @PostMapping("deleteProduct")
+		public ResponseEntity deleteCategory(@RequestParam(value = "productId")int productId) {
+		    	logger.info("********** API deleteCategory ******** START");
+				try {
+						productService.deleteProductById(productId);
+						responseEntity.setStatusCode("200");
+						responseEntity.setMessage("Success");	
+				}
+				catch (Exception e) {
+			    	logger.info("********** API deleteCategory ******** END");
+				}
+		    	logger.info("********** API deleteCategory ******** END");
+				return responseEntity;
+			}
+
 
 }

@@ -66,4 +66,11 @@ public List<Subcategory> getSubCategoriesById(int categoryId) {
 	return listSubCategoryCategories;
 }
 
+
+public int updateSubCategory(String subCategoryName, int subCategoryId) {
+
+	int result=subCategoryRepository.updateSubCategoryById(subCategoryId, subCategoryName);
+	return result;
+}
+
 }

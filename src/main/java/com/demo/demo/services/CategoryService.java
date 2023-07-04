@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -53,5 +55,19 @@ public List<CategoryResponseDTO> getCategories() {
 		categoryListResponseDTO.add(categoryResponseDTO);
 	}
 	return categoryListResponseDTO;
+}
+
+public int updateCategories(String categoryName,int categoryId) {
+
+	int result=categoryRepository.updateCategoryById(categoryId, categoryName);
+
+return result;
+}
+
+@Transactional
+public void deleteCategory(int categoryId) {
+
+	 categoryRepository.deleteById(categoryId);
+
 }
 }

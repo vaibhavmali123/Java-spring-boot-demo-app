@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,4 +114,17 @@ public class ProductService {
     	return productsListResponse;
     }
 
+	public int updateProduct(ProductRequestDTO productRequestDTO, int productId) {
+		
+	int result= productRepository.updateProductById(productId, productRequestDTO.getProductName(),
+				productRequestDTO.getPrice(),productRequestDTO.getQuantity(),productRequestDTO.getComment());
+	
+	return result;
+	}
+
+	@Transactional
+	public void deleteProductById(int productId) {
+
+		productRepository.deleteById(productId);
+	}
 }
