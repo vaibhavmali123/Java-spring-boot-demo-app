@@ -121,5 +121,27 @@ public class SubcategoryController {
 		    	logger.info("********** API updateCategories ******** END");
 				return responseEntity;
 			}
+		@PostMapping("deleteSubCategory")
+		public ResponseEntity deleteCategory(@RequestParam(value = "subCategoryId")int subCategoryId) {
+		    	logger.info("********** API deleteSubCategory ******** START");
+
+				try {
+					
+					subCategoryService.deleteCategory(subCategoryId);
+					
+					
+						responseEntity.setStatusCode("200");
+						responseEntity.setMessage("Success");
+					
+				}
+				catch (Exception e) {
+			    	logger.info("********** API deleteCategory from  catch ******** END");
+			    	responseEntity.setStatusCode("500");
+					responseEntity.setMessage("Please delete first corresponding items");
+				
+				}
+		    	logger.info("********** API deleteSubCategory ******** END"+responseEntity.getMessage());
+				return responseEntity;
+			}
 
 }

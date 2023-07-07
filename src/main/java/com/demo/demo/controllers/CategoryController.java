@@ -123,9 +123,12 @@ public ResponseEntity updateCategories(@RequestParam(value = "categoryName")Stri
 				
 			}
 			catch (Exception e) {
-		    	logger.info("********** API deleteCategory ******** END");
+		    	logger.info("********** API deleteCategory from  catch ******** END");
+		    	responseEntity.setStatusCode("500");
+				responseEntity.setMessage("Please delete first corresponding items");
+			
 			}
-	    	logger.info("********** API deleteCategory ******** END");
+	    	logger.info("********** API deleteCategory ******** END"+responseEntity.getMessage());
 			return responseEntity;
 		}
 

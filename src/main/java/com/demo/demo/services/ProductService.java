@@ -57,7 +57,7 @@ public class ProductService {
     	product.setComment(productRequestDTO.getComment());
     	Product productrs=productRepository.save(product);
 
-    	logger.info("********** Service  saveProduct ******** End"+productRequestDTO.getQuantity());
+    	logger.info("********** Service  saveProduct QTY ******** End"+productRequestDTO.getQuantity());
 
          return productrs;
     }
@@ -90,6 +90,8 @@ public class ProductService {
 
     public List<ProductsResponseDTO> getProductsByCategoryId(int categoryId) {
     	
+    	logger.info("********** API  getProductsByCategoryId Service ******** Start");
+
     List<ProductsResponseDTO>productsListResponse =  new ArrayList<ProductsResponseDTO>();
     
     	List<Product>productsList=productRepository.findAllBycategoryId(categoryId);
@@ -100,7 +102,7 @@ public class ProductService {
     		ProductsResponseDTO productsResponseDTO=new ProductsResponseDTO();
     		
     		productsResponseDTO.setCategoryId(product.getCategory().getCategoryId());
-    		productsResponseDTO.setSubCategoryId(product.getSubcategory().getCategoryId());
+    		productsResponseDTO.setSubCategoryId(product.getCategory().getCategoryId());
     		
     		productsResponseDTO.setProductName(product.getProductName());
     		productsResponseDTO.setProductImage(product.getProductImage());
@@ -108,9 +110,12 @@ public class ProductService {
     		productsResponseDTO.setPrice(product.getPrice());
     		productsResponseDTO.setQuantity(product.getQuantity());
     		productsResponseDTO.setComment(product.getComment());
-    		
+        	logger.info("********** API  qty ******** END"+product.getQuantity());
+
     		productsListResponse.add(productsResponseDTO);
     	}
+    	logger.info("********** API  getProductsByCategoryId Service ******** END");
+
     	return productsListResponse;
     }
 

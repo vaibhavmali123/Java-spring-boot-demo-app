@@ -68,29 +68,36 @@ public class ProductController {
 				@RequestParam(value = "categoryId")int categoryId,@RequestParam(value = "subCategoryId")int subCategoryId)
 		{
 	    	logger.info("********** API  getProductsById ******** Start");
-	    	
-	    	List<ProductsResponseDTO>productList=new ArrayList<ProductsResponseDTO>();
-	    	
-	    	if (subCategoryId!=0) {
-	    		productList= productService.getProductsById(categoryId,subCategoryId);
-			}
-	    	else {
-	    		productList= productService.getProductsByCategoryId(categoryId);
+	    	try {
 
-	    	}
-					if(productList.size()>0) {
-						
-				    	logger.info("********** API  getProductsById ******** End"+productList.size());
-						responseEntity.setStatusCode("200");
-						responseEntity.setMessage("Success");
-						responseEntity.setList((ArrayList)productList);
-					}
-					else {
-				    	logger.info("********** API  getProductsById from else ******** End"+productList.size());
-						responseEntity.setStatusCode("500");
-						responseEntity.setMessage("Failed to fetch products");
-					}
-			
+		    	List<ProductsResponseDTO>productList=new ArrayList<ProductsResponseDTO>();
+		    	
+		    	if (subCategoryId!=0) {
+		    		productList.clear();
+		    		productList= productService.getProductsById(categoryId,subCategoryId);
+				}
+		    	else {
+		    		productList.clear();
+		    		productList= productService.getProductsByCategoryId(categoryId);
+
+		    	}
+						if(!productList.isEmpty()) {
+							
+					    	logger.info("********** API  getProductsById ******** End"+"CatId:"+categoryId+" SubCatId"+subCategoryId);
+							responseEntity.setStatusCode("200");
+							responseEntity.setMessage("Success");
+							responseEntity.setList((ArrayList)productList);
+						}
+						else {
+							productList.clear();
+					    	logger.info("********** API  getProductsById from else ******** End"+"CatId:"+categoryId+" SubCatId"+subCategoryId);
+							responseEntity.setStatusCode("500");
+							responseEntity.setMessage("Failed to fetch products");
+							responseEntity.setList((ArrayList)productList);
+						}
+			} catch (Exception e) {
+				// TODO: handle exception
+			}			
 			return responseEntity;
 		}
 	 @PostMapping("updateProduct")
@@ -125,6 +132,9 @@ public class ProductController {
 				}
 				catch (Exception e) {
 			    	logger.info("********** API deleteCategory ******** END");
+			    	responseEntity.setStatusCode("500");
+					responseEntity.setMessage("Please delete first corresponding items");
+			
 				}
 		    	logger.info("********** API deleteCategory ******** END");
 				return responseEntity;

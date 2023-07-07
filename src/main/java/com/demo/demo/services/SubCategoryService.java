@@ -4,6 +4,8 @@ package com.demo.demo.services;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +73,13 @@ public int updateSubCategory(String subCategoryName, int subCategoryId) {
 
 	int result=subCategoryRepository.updateSubCategoryById(subCategoryId, subCategoryName);
 	return result;
+}
+
+@Transactional
+public void deleteCategory(int subCategoryId) {
+	Subcategory subcategory=subCategoryRepository.findById(subCategoryId);
+
+	subCategoryRepository.delete(subcategory);
 }
 
 }
