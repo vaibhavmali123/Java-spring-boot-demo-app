@@ -41,7 +41,7 @@ public class SubcategoryController {
 
 			if (subCategory!=null) {
 				responseEntity.setStatusCode("200");
-		           responseEntity.setMessage("Success");
+		           responseEntity.setMessage("Subcategory saved successfully");
 			}
 			else {
 				responseEntity.setStatusCode("504");
@@ -108,7 +108,7 @@ public class SubcategoryController {
 					if(result>0) {
 						
 						responseEntity.setStatusCode("200");
-						responseEntity.setMessage("Success");
+						responseEntity.setMessage("Subcategory updated successfully");
 					}
 					else {
 						responseEntity.setStatusCode("500");
@@ -131,7 +131,7 @@ public class SubcategoryController {
 					
 					
 						responseEntity.setStatusCode("200");
-						responseEntity.setMessage("Success");
+						responseEntity.setMessage("Subcategory deleted successfully");
 					
 				}
 				catch (Exception e) {

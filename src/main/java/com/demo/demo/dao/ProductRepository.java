@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.demo.demo.dto.reports.ReportsResponseDTO;
 import com.demo.demo.entities.Customer;
 import com.demo.demo.entities.OrderItem;
 import com.demo.demo.entities.Product;
@@ -38,5 +39,6 @@ public interface ProductRepository extends CrudRepository<Product,Integer>{
     @Transactional
     @Query(value =  "UPDATE product p SET p.quantity=:quantity,p.product_name=:productName,p.price=:price,p.quantity=:quantity,p.comment=:comment WHERE p.product_id=:product_id",nativeQuery = true)
 	public int updateProductById(int product_id, String productName, int price, int quantity, String comment);
+    
 
 }

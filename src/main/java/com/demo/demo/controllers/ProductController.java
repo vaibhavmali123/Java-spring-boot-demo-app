@@ -56,7 +56,7 @@ public class ProductController {
 
 	        productService.saveProduct(productRequestDTO);
 	        responseEntity.setStatusCode("200");
-	        responseEntity.setMessage("Success");
+	        responseEntity.setMessage("Product saved successfully");
 	  
 	    	logger.info("********** API  saveProduct ******** End"+productRequestDTO.getProductName());
 
@@ -109,7 +109,7 @@ public class ProductController {
 			 int result=productService.updateProduct(productRequestDTO,productId);
 			 if(result>0) {
 					responseEntity.setStatusCode("200");
-					responseEntity.setMessage("Success");
+					responseEntity.setMessage("Product updated successfully");
 				}
 				else {
 					responseEntity.setStatusCode("500");
@@ -128,7 +128,7 @@ public class ProductController {
 				try {
 						productService.deleteProductById(productId);
 						responseEntity.setStatusCode("200");
-						responseEntity.setMessage("Success");	
+						responseEntity.setMessage("Product deleted successfully");	
 				}
 				catch (Exception e) {
 			    	logger.info("********** API deleteCategory ******** END");

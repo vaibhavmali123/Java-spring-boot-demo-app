@@ -40,13 +40,13 @@ public class CategoryController {
 			
 			if (category!=null) {
 				responseEntity.setStatusCode("200");
-		           responseEntity.setMessage("Success");
+		           responseEntity.setMessage("Category saved successfully");
 		       	logger.info("********** API saveCategory saved  ******** "+category.getCategoryName());
 	  
 			}
 			else {
 				responseEntity.setStatusCode("504");
-		           responseEntity.setMessage("Failed");    
+		           responseEntity.setMessage("Failed to save category");    
 			
 			}
 	    	logger.info("********** API saveCategory ******** End");
@@ -54,6 +54,8 @@ public class CategoryController {
 		}
 		catch (Exception e) {
 	    	logger.info("********** API saveCategory ******** End"+e.getMessage());
+	    	responseEntity.setStatusCode("500");
+	           responseEntity.setMessage("Failed to save category");    
 		}
 		return responseEntity;
 		
@@ -79,6 +81,9 @@ public class CategoryController {
 
 		}
 		catch (Exception e) {
+			responseEntity.setStatusCode("504");
+	           responseEntity.setMessage("Failed to fetch category");    
+
 	    	logger.info("********** API getAllCategories ******** END"+e.getMessage());
 			}
 		
@@ -96,11 +101,11 @@ public ResponseEntity updateCategories(@RequestParam(value = "categoryName")Stri
 			if(result>0) {
 				
 				responseEntity.setStatusCode("200");
-				responseEntity.setMessage("Success");
+				responseEntity.setMessage("Category updated successfully");
 			}
 			else {
 				responseEntity.setStatusCode("500");
-				responseEntity.setMessage("Failed to fetch categories");
+				responseEntity.setMessage("Failed to update categories");
 			}
 		}
 		catch (Exception e) {
@@ -119,7 +124,7 @@ public ResponseEntity updateCategories(@RequestParam(value = "categoryName")Stri
 				
 				
 					responseEntity.setStatusCode("200");
-					responseEntity.setMessage("Success");
+					responseEntity.setMessage("Category deleted successfully");
 				
 			}
 			catch (Exception e) {

@@ -75,7 +75,7 @@ public class OrderController {
 
         orderService.saveOrders(orders,customerId,productId);
         responseEntity.setStatusCode("200");
-        responseEntity.setMessage("Success");
+        responseEntity.setMessage("Order placed successfully");
         
     	logger.info("********** API  saveOrder ******** END");
 
