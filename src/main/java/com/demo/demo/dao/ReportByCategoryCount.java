@@ -2,8 +2,8 @@ package com.demo.demo.dao;
 
 public interface ReportByCategoryCount {
 
-	 int getCategoryId();
-	 String getCategoryName();
+	 int getId();
+	 String getItemName();
 	 int getSoldCount();
 	 int getInStockCount();
 }

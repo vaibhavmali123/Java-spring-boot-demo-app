@@ -13,12 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.demo.demo.dao.CategoryRepository;
+import com.demo.demo.dao.ProductAuditRepository;
 import com.demo.demo.dao.ProductRepository;
 import com.demo.demo.dao.SubCategoryRepository;
 import com.demo.demo.dto.ProductRequestDTO;
 import com.demo.demo.dto.ResponseDTO.ProductsResponseDTO;
 import com.demo.demo.entities.Category;
 import com.demo.demo.entities.Product;
+import com.demo.demo.entities.ProductAudit;
 import com.demo.demo.entities.Subcategory;
 
 @Component
@@ -36,6 +38,8 @@ public class ProductService {
     @Autowired
     SubCategoryRepository subCategoryRepository;
 
+    @Autowired
+    ProductAuditRepository productAuditRepository;
 
     public Product saveProduct(ProductRequestDTO productRequestDTO){
 
@@ -55,8 +59,20 @@ public class ProductService {
     	product.setSubcategory(subcategory);
     	product.setQuantity(productRequestDTO.getQuantity());
     	product.setComment(productRequestDTO.getComment());
+    	
     	Product productrs=productRepository.save(product);
 
+    	ProductAudit productAudit=new ProductAudit();
+    	productAudit.setNetQuantity(productRequestDTO.getQuantity());
+    	productAudit.setPrice(productRequestDTO.getPrice());
+    	productAudit.setNetQuantity(0);
+    	productAudit.setUpdatedDate(new Date());
+    	productAudit.setActivity("NewProduct");
+    	productAudit.setProduct(product);
+    	productAuditRepository.save(productAudit);
+    	
+    	
+    	
     	logger.info("********** Service  saveProduct QTY ******** End"+productRequestDTO.getQuantity());
 
          return productrs;
@@ -123,6 +139,19 @@ public class ProductService {
 		
 	int result= productRepository.updateProductById(productId, productRequestDTO.getProductName(),
 				productRequestDTO.getPrice(),productRequestDTO.getQuantity(),productRequestDTO.getComment());
+	
+	Product product=new Product();
+	product=productRepository.findById(productId);
+	logger.info("********** API  updateProduct Service ******** END"+productRequestDTO.getQuantity());
+
+	ProductAudit productAudit=new ProductAudit();
+	productAudit.setNetQuantity(productRequestDTO.getQuantity());
+	productAudit.setOldNetQuantity(product.getQuantity());
+	productAudit.setPrice(productRequestDTO.getPrice());
+	productAudit.setUpdatedDate(new Date());
+	productAudit.setActivity("UpdatedProduct");
+	productAudit.setProduct(product);
+	productAuditRepository.save(productAudit);
 	
 	return result;
 	}

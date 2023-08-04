@@ -15,8 +15,10 @@ import com.demo.demo.entities.Customer;
 import com.demo.demo.entities.OrderItem;
 import com.demo.demo.entities.Orders;
 import com.demo.demo.entities.Product;
+import com.demo.demo.entities.ProductAudit;
 import com.demo.demo.entities.Subcategory;
 import com.demo.demo.dao.OrderRepository;
+import com.demo.demo.dao.ProductAuditRepository;
 import com.demo.demo.dao.ProductRepository;
 import com.demo.demo.dao.SubCategoryRepository;
 import com.demo.demo.dto.OrderDTO;
@@ -44,6 +46,9 @@ public class OrderService {
 
     @Autowired
     private ProductRepository productRepository;
+    
+    @Autowired
+    private ProductAuditRepository productAuditRepository;
 
     @Autowired
     private OrderItemRepository orderItemRepository;
@@ -142,6 +147,16 @@ public class OrderService {
         	 
         	 productRepository.updateProductQuantityById(productItem.getProductId(),productItem.getQuantity()-item.getQuantity());
         	 
+        	 ProductAudit productAudit=new ProductAudit();
+        	 productAudit.setNetQuantity(productItem.getQuantity()-item.getQuantity());
+        	 productAudit.setOldNetQuantity(productItem.getQuantity());
+        		productAudit.setSoldQuantity(item.getQuantity());
+        		productAudit.setPrice(item.getPrice());
+        		productAudit.setUpdatedDate(new Date());
+        		productAudit.setActivity("UpdatedProduct");
+        		productAudit.setProduct(productItem);
+        		productAuditRepository.save(productAudit);
+        		
          	logger.info("********** Service saveOrders orderItem saved********"+item.getQuantity());
 
          }

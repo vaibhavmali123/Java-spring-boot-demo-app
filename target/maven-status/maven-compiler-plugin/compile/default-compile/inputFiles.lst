@@ -8,6 +8,7 @@ E:\Projects\web services\New folder\demo\src\main\java\com\demo\demo\dao\ReportS
 E:\Projects\web services\New folder\demo\src\main\java\com\demo\demo\dto\ProductRequestDTO.java
 E:\Projects\web services\New folder\demo\src\main\java\com\demo\demo\dto\ResponseDTO\ProductsResponseDTO.java
 E:\Projects\web services\New folder\demo\src\main\java\com\demo\demo\entities\Subcategory.java
+E:\Projects\web services\New folder\demo\src\main\java\com\demo\demo\entities\ProductAudit.java
 E:\Projects\web services\New folder\demo\src\main\java\com\demo\demo\dto\OrderListDto.java
 E:\Projects\web services\New folder\demo\src\main\java\com\demo\demo\dto\CategoryDTO.java
 E:\Projects\web services\New folder\demo\src\main\java\com\demo\demo\dao\ProductRepository.java

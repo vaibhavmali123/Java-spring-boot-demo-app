@@ -3,8 +3,8 @@ package com.demo.demo.dao;
 public interface ReportSubCategoryCount {
 
 	
-	int getSubCategoryId();
-	 String getSubCategoryName();
+	int getId();
+	 String getItemName();
 	 int getSoldCount();
 	 int getInStockCount();
 }

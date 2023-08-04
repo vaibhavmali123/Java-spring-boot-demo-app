@@ -1,6 +1,7 @@
 package com.demo.demo.controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -24,18 +25,18 @@ import com.demo.demo.services.ReportService;
 public class ReportsController {
 
 	private static final Logger logger = LogManager.getLogger(ReportsController.class);
-    ResponseEntity responseEntity=new ResponseEntity();
     
     @Autowired
 	ReportService reportService;
-	
-@PostMapping("categoryWiseReport")    
-public ResponseEntity categoryWiseReport(@RequestBody ReportsRequestDTO reportsRequestDTO) {
-	
-	logger.info("********** API categoryWiseReport ******** Start");
+    ResponseEntity responseEntity=new ResponseEntity();
+
+@GetMapping("categoryWiseReport")    
+public ResponseEntity categoryWiseReport(@RequestParam(value = "fromDate",required = false)Date fromDate,@RequestParam(value = "toDate",required = false)Date toDate) {
+
+	logger.info("********** API categoryWiseReport ******** Start fromDate"+fromDate+"toDate"+toDate);
 
 	try {
-		List<ReportByCategoryCount>  responseList =reportService.categoryWiseReport(reportsRequestDTO);
+		List<ReportByCategoryCount>  responseList =reportService.dateAndcategoryWiseReport(fromDate,toDate);
 		
 		if(responseList.size()>0) {
 			responseEntity.setStatusCode("200");
@@ -56,12 +57,14 @@ public ResponseEntity categoryWiseReport(@RequestBody ReportsRequestDTO reportsR
 	return responseEntity;
 }
 @GetMapping("subCategoryWiseReport")    
-public ResponseEntity subCategoryWiseReport(@RequestParam(value = "categoryId")int categoryId) {
-	
+public ResponseEntity subCategoryWiseReport(@RequestParam(value = "categoryId")int categoryId,
+		@RequestParam(value = "fromDate",required = false)Date fromDate,@RequestParam(value = "toDate",required = false)Date toDate) {
+    ResponseEntity responseEntity=new ResponseEntity();
+
 	logger.info("********** API subCategoryWiseReport ******** Start"+categoryId);
 
 	try {
-		List<ReportSubCategoryCount>  responseList =reportService.subCategoryWiseReport(categoryId);
+		List<ReportSubCategoryCount>  responseList =reportService.subCategoryWiseReport(categoryId,fromDate,toDate);
 		
 		if(responseList.size()>0) {
 			responseEntity.setStatusCode("200");
@@ -83,12 +86,14 @@ public ResponseEntity subCategoryWiseReport(@RequestParam(value = "categoryId")i
 }
 
 @GetMapping("productWiseReport")    
-public ResponseEntity productWiseReport(@RequestParam(value = "categoryId")int categoryId,@RequestParam(value = "subCategoryId")int subCategoryId) {
-	
+public ResponseEntity productWiseReport(@RequestParam(value = "categoryId")int categoryId,@RequestParam(value = "subCategoryId",required = false)Integer subCategoryId,
+		@RequestParam(value = "fromDate",required = false)Date fromDate,@RequestParam(value = "toDate",required = false)Date toDate) {
+    ResponseEntity responseEntity=new ResponseEntity();
+
 	logger.info("********** API productWiseReport ******** Start"+categoryId);
 
 	try {
-		List<ReportProductsCount>  responseList =reportService.productWiseReport(categoryId,subCategoryId);
+		List<ReportProductsCount>  responseList =reportService.productWiseReport(categoryId,subCategoryId,fromDate,toDate);
 		
 		if(responseList.size()>0) {
 			responseEntity.setStatusCode("200");
