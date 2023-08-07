@@ -34,18 +34,19 @@ public interface OrderItemRepository extends CrudRepository<OrderItem,Integer>{
 
     
     
+  
     // Queries for fetch sales report of product
-    @Query(value = "SELECT product.product_id AS productId,product.product_name AS productName,sum(order_item.quantity)AS soldCount,product.quantity AS inStockCount FROM order_item  JOIN product ON order_item.product_id=product.product_id JOIN category cat ON product.category_id=cat.category_id and product.sub_category_id=:subCategoryId JOIN ordertable o ON order_item.order_id=o.order_id WHERE product.category_id= :categoryId  and o.date >= :startDate AND o.date < :toDate GROUP BY product.product_name",nativeQuery = true)
+    @Query(value = "SELECT pa.product_id AS productId,p.product_name AS productName,SUM(pa.sold_quantity) AS soldCount,pa.old_net_quantity AS netQuantity FROM productaudit pa JOIN product p ON pa.product_id=p.product_id JOIN category c ON pa.category_id=c.category_id WHERE pa.updated_date >= :startDate AND pa.updated_date < :toDate and c.category_id=:categoryId and sub_category.sub_category_id=:subCategoryId GROUP BY p.product_id",nativeQuery = true)
     List<ReportProductsCount>findReportsByProductAndDate(@Param("categoryId")int categoryId,@Param("subCategoryId")int subCategoryId,@Param("startDate")Date startDate,@Param("toDate")Date toDate);
 
-    @Query(value = "SELECT product.product_id AS productId,product.product_name AS productName,sum(order_item.quantity)AS soldCount,product.quantity AS inStockCount FROM order_item  JOIN product ON order_item.product_id=product.product_id JOIN category cat ON product.category_id=cat.category_id JOIN ordertable o ON order_item.order_id=o.order_id WHERE product.category_id= :categoryId  and o.date >= :startDate AND o.date < :toDate GROUP BY product.product_name",nativeQuery = true)
+    @Query(value = "SELECT pa.product_id AS productId,p.product_name AS productName,SUM(pa.sold_quantity) AS soldCount,pa.old_net_quantity AS netQuantity FROM productaudit pa JOIN product p ON pa.product_id=p.product_id JOIN category c ON pa.category_id=c.category_id WHERE c.category_id=:categoryId and pa.updated_date >= :startDate AND pa.updated_date < :toDate GROUP BY p.product_id",nativeQuery = true)
     List<ReportProductsCount>findReportsByProductAndDateExcludeSubCategory(@Param("categoryId")int categoryId,@Param("startDate")Date startDate,@Param("toDate")Date toDate);
 
-    
-    @Query(value = "SELECT product.product_id AS productId,product.product_name AS productName,sum(order_item.quantity)AS soldCount,product.quantity AS inStockCount FROM order_item  JOIN product ON order_item.product_id=product.product_id JOIN category cat ON product.category_id=cat.category_id JOIN ordertable o ON order_item.order_id=o.order_id WHERE product.category_id=:categoryId and sub_category_id=:subCategoryId GROUP BY product.product_name",nativeQuery = true)
+   
+    @Query(value = "SELECT pa.product_id AS productId,p.product_name AS productName,SUM(pa.sold_quantity) AS soldCount,pa.old_net_quantity AS netQuantity FROM productaudit pa JOIN product p ON pa.product_id=p.product_id JOIN category c ON pa.category_id=c.category_id WHERE c.category_id=:categoryId and sub_category_id=:subCategoryId GROUP BY p.product_id",nativeQuery = true)
     List<ReportProductsCount>findReportsByProduct(@Param("categoryId")int categoryId,@Param("subCategoryId")int subCategoryId);
     
-    @Query(value = "SELECT product.product_id AS productId,product.product_name AS productName,sum(order_item.quantity)AS soldCount,product.quantity AS inStockCount FROM order_item  JOIN product ON order_item.product_id=product.product_id JOIN category cat ON product.category_id=cat.category_id JOIN ordertable o ON order_item.order_id=o.order_id WHERE product.category_id=:categoryId GROUP BY product.product_name",nativeQuery = true)
+    @Query(value = "SELECT pa.product_id AS productId,p.product_name AS productName,SUM(pa.sold_quantity) AS soldCount,pa.old_net_quantity AS netQuantity FROM productaudit pa JOIN product p ON pa.product_id=p.product_id JOIN category c ON pa.category_id=c.category_id WHERE c.category_id=:categoryId GROUP BY p.product_id",nativeQuery = true)
     List<ReportProductsCount>findReportsByProductExcludeSubCategoryId(@Param("categoryId")int categoryId);
 
 }

@@ -2,6 +2,7 @@ package com.demo.demo.services;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Date;
 
 import org.apache.logging.log4j.LogManager;
@@ -145,19 +146,25 @@ public class OrderService {
              orderItem.setOrders(ordersItem);
         	 orderItemRepository.save(orderItem);
         	 
-        	 productRepository.updateProductQuantityById(productItem.getProductId(),productItem.getQuantity()-item.getQuantity());
+        	 productRepository.updateProductQuantityById(productItem.getProductId(),productItem.getQuantity());
         	 
+        	 ProductAudit pAudit=new ProductAudit();
+        	  pAudit=productAuditRepository.findByProductId(productItem.getProductId());
+        	logger.info("********** Service  saveOrders ******** Start"+productItem.getProductId());
+
         	 ProductAudit productAudit=new ProductAudit();
-        	 productAudit.setNetQuantity(productItem.getQuantity()-item.getQuantity());
+        	 productAudit.setNetQuantity(pAudit.getNetQuantity()-item.getQuantity());
         	 productAudit.setOldNetQuantity(productItem.getQuantity());
         		productAudit.setSoldQuantity(item.getQuantity());
         		productAudit.setPrice(item.getPrice());
         		productAudit.setUpdatedDate(new Date());
-        		productAudit.setActivity("UpdatedProduct");
+        		productAudit.setActivity("order");
+        		productAudit.setCategory(productItem.getCategory());
+        		productAudit.setSubcategory(productItem.getSubcategory());
         		productAudit.setProduct(productItem);
         		productAuditRepository.save(productAudit);
         		
-         	logger.info("********** Service saveOrders orderItem saved********"+item.getQuantity());
+         	logger.info("********** Service saveOrders orderItem saved********"+productItem.getProductId());
 
          }
      	logger.info("********** Service  saveOrders ******** End");

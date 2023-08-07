@@ -6,5 +6,5 @@ public interface ReportProductsCount {
 	int getProductId();
 	 String getProductName();
 	 int getSoldCount();
-	 int getInStockCount();
+	 int getNetQuantity();
 }

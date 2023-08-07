@@ -12,6 +12,7 @@ com\demo\demo\controllers\SubcategoryController.class
 com\demo\demo\controllers\CategoryController.class
 com\demo\demo\entities\Subcategory.class
 com\demo\demo\DemoApplication.class
+com\demo\demo\dao\ProductAuditRepository.class
 com\demo\demo\dto\ResponseDTO\SubCategoryResponseDTO.class
 com\demo\demo\entities\Product.class
 com\demo\demo\services\SubCategoryService.class
@@ -40,6 +41,7 @@ com\demo\demo\dto\ResponseDTO\ProductsResponseDTO.class
 com\demo\demo\dao\ReportsDAO.class
 com\demo\demo\entities\ResponseEntity.class
 com\demo\demo\dao\CustomerRepository.class
+com\demo\demo\entities\ProductAudit.class
 com\demo\demo\dao\ReportSubCategoryCount.class
 com\demo\demo\dto\ProductRequestDTO.class
 com\demo\demo\dao\OrderRepository.class
