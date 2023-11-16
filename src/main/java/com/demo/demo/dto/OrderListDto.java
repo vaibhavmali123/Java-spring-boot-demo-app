@@ -33,10 +33,10 @@ public class OrderListDto implements Serializable{
 
 	@Override
 	public String toString() {
-		return "OrderListDto [orderDTOList=" + orderDTOList + ", getOrderDTOList()=" + getOrderDTOList()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
-				+ "]";
+		return "OrderListDto [orderDTOList=" + orderDTOList + "]";
 	}
+
+	
 	
 	
 }

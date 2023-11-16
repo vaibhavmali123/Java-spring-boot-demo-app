@@ -32,7 +32,7 @@ public class CustomerController {
     	
     	return "Success";
     }
-
+//8k2O9HRK%ikoHyanz7E)4BU4PJUhgCTU
     @GetMapping("/getCustomers")
     public ResponseEntity getCustomers(){
     	logger.info("********** API  getCustomers ******** Start");
