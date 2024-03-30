@@ -1,5 +1,7 @@
 package com.demo.demo.dto;
 
+import javax.persistence.Column;
+
 public class ProductRequestDTO {
 
 	
@@ -21,24 +23,42 @@ private String comment;
 
 private String productImage;
 
-public ProductRequestDTO() {
-	super();
-	// TODO Auto-generated constructor stub
-}
+private String unit;
 
-public ProductRequestDTO(String productName, int price, String updatedDate, String createdDate, int quantity,
-		String comment,int categoryId,int subCategoryId,String productImage) {
+private String purchasePrice;
+
+private String tax;
+
+private String lowStock;
+
+private String itemType;
+
+
+public ProductRequestDTO(int categoryId, int subCategoryId, String productName, int price, String updatedDate,
+		String createdDate, int quantity, String comment, String productImage, String unit, String purchasePrice,
+		String tax, String lowStock, String itemType) {
 	super();
+	this.categoryId = categoryId;
+	this.subCategoryId = subCategoryId;
 	this.productName = productName;
 	this.price = price;
 	this.updatedDate = updatedDate;
 	this.createdDate = createdDate;
 	this.quantity = quantity;
 	this.comment = comment;
-	this.categoryId=categoryId;
-	this.subCategoryId=subCategoryId;
-	this.productImage=productImage;
+	this.productImage = productImage;
+	this.unit = unit;
+	this.purchasePrice = purchasePrice;
+	this.tax = tax;
+	this.lowStock = lowStock;
+	this.itemType = itemType;
 }
+
+public ProductRequestDTO() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+
 
 public String getProductName() {
 	return productName;
@@ -113,11 +133,55 @@ public void setProductImage(String productImage) {
 	this.productImage = productImage;
 }
 
+
+
+public String getUnit() {
+	return unit;
+}
+
+public void setUnit(String unit) {
+	this.unit = unit;
+}
+
+public String getPurchasePrice() {
+	return purchasePrice;
+}
+
+public void setPurchasePrice(String purchasePrice) {
+	this.purchasePrice = purchasePrice;
+}
+
+public String getTax() {
+	return tax;
+}
+
+public void setTax(String tax) {
+	this.tax = tax;
+}
+
+public String getLowStock() {
+	return lowStock;
+}
+
+public void setLowStock(String lowStock) {
+	this.lowStock = lowStock;
+}
+
+public String getItemType() {
+	return itemType;
+}
+
+public void setItemType(String itemType) {
+	this.itemType = itemType;
+}
+
 @Override
 public String toString() {
 	return "ProductRequestDTO [categoryId=" + categoryId + ", subCategoryId=" + subCategoryId + ", productName="
 			+ productName + ", price=" + price + ", updatedDate=" + updatedDate + ", createdDate=" + createdDate
-			+ ", quantity=" + quantity + ", comment=" + comment + ", productImage=" + productImage + "]";
+			+ ", quantity=" + quantity + ", comment=" + comment + ", productImage=" + productImage + ", unit=" + unit
+			+ ", purchasePrice=" + purchasePrice + ", tax=" + tax + ", lowStock=" + lowStock + ", itemType=" + itemType
+			+ "]";
 }
 
 

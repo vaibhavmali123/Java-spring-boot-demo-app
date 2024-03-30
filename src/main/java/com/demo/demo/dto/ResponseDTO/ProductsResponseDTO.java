@@ -23,11 +23,12 @@ public class ProductsResponseDTO {
 	
 	private String productName;
 	
-	@Column(name = "price")
 	private int price;
 	
 	private int quantity;
 	
+	private int availableQuantity;
+
 	private String comment;
 	
 	private String productImage;
@@ -39,9 +40,21 @@ public class ProductsResponseDTO {
 	private int categoryId;
 	
 	private int subCategoryId;
+	
+	private String unit;
+
+	private String purchasePrice;
+
+	private String tax;
+
+	private String lowStock;
+
+	private String itemType;
+
 
 	public ProductsResponseDTO(int productId, String productName, int price, int quantity, String comment,
-			String productImage, Date createdDate, Date updatedDate, int categoryId, int subCategoryId) {
+			String productImage, Date createdDate, Date updatedDate, int categoryId, int subCategoryId, String unit,
+			String purchasePrice, String tax, String lowStock, String itemType,int availableQuantity) {
 		super();
 		this.productId = productId;
 		this.productName = productName;
@@ -53,6 +66,12 @@ public class ProductsResponseDTO {
 		this.updatedDate = updatedDate;
 		this.categoryId = categoryId;
 		this.subCategoryId = subCategoryId;
+		this.unit = unit;
+		this.purchasePrice = purchasePrice;
+		this.tax = tax;
+		this.lowStock = lowStock;
+		this.itemType = itemType;
+		this.availableQuantity=availableQuantity;
 	}
 
 	public ProductsResponseDTO() {
@@ -92,6 +111,16 @@ public class ProductsResponseDTO {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	
+	
+	public int getAvailableQuantity() {
+		return availableQuantity;
+	}
+
+	public void setAvailableQuantity(int availableQuantity) {
+		this.availableQuantity = availableQuantity;
 	}
 
 	public String getComment() {
@@ -142,12 +171,56 @@ public class ProductsResponseDTO {
 		this.subCategoryId = subCategoryId;
 	}
 
+	
+	
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+
+	public String getPurchasePrice() {
+		return purchasePrice;
+	}
+
+	public void setPurchasePrice(String purchasePrice) {
+		this.purchasePrice = purchasePrice;
+	}
+
+	public String getTax() {
+		return tax;
+	}
+
+	public void setTax(String tax) {
+		this.tax = tax;
+	}
+
+	public String getLowStock() {
+		return lowStock;
+	}
+
+	public void setLowStock(String lowStock) {
+		this.lowStock = lowStock;
+	}
+
+	public String getItemType() {
+		return itemType;
+	}
+
+	public void setItemType(String itemType) {
+		this.itemType = itemType;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductsResponseDTO [productId=" + productId + ", productName=" + productName + ", price=" + price
-				+ ", quantity=" + quantity + ", comment=" + comment + ", productImage=" + productImage
-				+ ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + ", categoryId=" + categoryId
-				+ ", subCategoryId=" + subCategoryId + "]";
+				+ ", quantity=" + quantity + ", availableQuantity=" + availableQuantity + ", comment=" + comment
+				+ ", productImage=" + productImage + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate
+				+ ", categoryId=" + categoryId + ", subCategoryId=" + subCategoryId + ", unit=" + unit
+				+ ", purchasePrice=" + purchasePrice + ", tax=" + tax + ", lowStock=" + lowStock + ", itemType="
+				+ itemType + "]";
 	}
 
 	

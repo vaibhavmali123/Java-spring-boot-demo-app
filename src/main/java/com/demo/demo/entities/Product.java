@@ -38,7 +38,10 @@ public class Product implements Serializable{
 	
 	@Column(name = "quantity")
 	private int quantity;
-	
+
+	@Column(name = "availableQuantity")
+	private int availableQuantity;
+
 	
 	@Column(name = "comment")
 	private String comment;
@@ -57,11 +60,50 @@ public class Product implements Serializable{
 	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd/MM/yyyy")
 	@Column(name = "updated_date")
 	private Date updatedDate;
+	
+	@Column(name = "unit")
+	private String unit;
+	
+	@Column(name = "purchasePrice")
+	private String purchasePrice;
+	
+	@Column(name = "tax")
+	private String tax;
+	
+	@Column(name = "lowStock")
+	private String lowStock;
+	
+	@Column(name = "itemType")
+	private String itemType;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "categoryId")
 	private Category category;
 	
+	public Product(int productId, String productName, int price, int quantity, String comment, String productImage,
+			Date createdDate, Date updatedDate, String unit, String purchasePrice, String tax, String lowStock,
+			String itemType, Category category, Subcategory subcategory,int availableQuantity) {
+		super();
+		this.productId = productId;
+		this.productName = productName;
+		this.price = price;
+		this.quantity = quantity;
+		this.comment = comment;
+		this.productImage = productImage;
+		this.createdDate = createdDate;
+		this.updatedDate = updatedDate;
+		this.unit = unit;
+		this.purchasePrice = purchasePrice;
+		this.tax = tax;
+		this.lowStock = lowStock;
+		this.itemType = itemType;
+		this.category = category;
+		this.subcategory = subcategory;
+		this.availableQuantity=availableQuantity;
+	}
+
+
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "subCategoryId")
 	private Subcategory subcategory;
@@ -71,7 +113,7 @@ public class Product implements Serializable{
 	 * = true) List<Orders>Orders;
 	 */
 	public Product(int productId,String productName, Date createdDate, Date updatedDate,
-			int price,Category category,String comment,int quantity,Subcategory subcategory,String productImage) {
+			int price,Category category,String comment,int quantity,Subcategory subcategory,String productImage,int availableQuantity) {
 		super();
 		this.productId = productId;
 		this.productName = productName;
@@ -84,6 +126,7 @@ public class Product implements Serializable{
 		this.quantity=quantity;
 		this.subcategory=subcategory;
 		this.productImage=productImage;
+		this.availableQuantity=availableQuantity;
 	}
 	
 	
@@ -167,6 +210,17 @@ public class Product implements Serializable{
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+	
+
+	public int getAvailableQuantity() {
+		return availableQuantity;
+	}
+
+
+
+	public void setAvailableQuantity(int availableQuantity) {
+		this.availableQuantity = availableQuantity;
+	}
 
 
 
@@ -204,13 +258,76 @@ public class Product implements Serializable{
 		this.productImage = productImage;
 	}
 
+	
+
+
+	public String getUnit() {
+		return unit;
+	}
+
+
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+
+
+
+	public String getPurchasePrice() {
+		return purchasePrice;
+	}
+
+
+
+	public void setPurchasePrice(String purchasePrice) {
+		this.purchasePrice = purchasePrice;
+	}
+
+
+
+	public String getTax() {
+		return tax;
+	}
+
+
+
+	public void setTax(String tax) {
+		this.tax = tax;
+	}
+
+
+
+	public String getLowStock() {
+		return lowStock;
+	}
+
+
+
+	public void setLowStock(String lowStock) {
+		this.lowStock = lowStock;
+	}
+
+
+
+	public String getItemType() {
+		return itemType;
+	}
+
+
+
+	public void setItemType(String itemType) {
+		this.itemType = itemType;
+	}
+
 
 
 	@Override
 	public String toString() {
 		return "Product [productId=" + productId + ", productName=" + productName + ", price=" + price + ", quantity="
-				+ quantity + ", comment=" + comment + ", productImage=" + productImage + ", createdDate=" + createdDate
-				+ ", updatedDate=" + updatedDate + ", category=" + category + ", subcategory=" + subcategory + "]";
+				+ quantity + ", availableQuantity=" + availableQuantity + ", comment=" + comment + ", productImage="
+				+ productImage + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + ", unit=" + unit
+				+ ", purchasePrice=" + purchasePrice + ", tax=" + tax + ", lowStock=" + lowStock + ", itemType="
+				+ itemType + ", category=" + category + ", subcategory=" + subcategory + "]";
 	}
 
 	

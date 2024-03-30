@@ -67,35 +67,46 @@ public class ProductController {
 		public ResponseEntity getProductsById(
 				@RequestParam(value = "categoryId")int categoryId,@RequestParam(value = "subCategoryId")int subCategoryId)
 		{
+	    	List<ProductsResponseDTO>productList=new ArrayList<ProductsResponseDTO>();
+
 	    	logger.info("********** API  getProductsById ******** Start");
 	    	try {
 
-		    	List<ProductsResponseDTO>productList=new ArrayList<ProductsResponseDTO>();
 		    	
-		    	if (subCategoryId!=0) {
+		    	if(categoryId==0) {
+			    	logger.info("********** API  getProducts for 0 Id ******** Start");
+		    		productList.clear();
+		    		productList= productService.getAllItems();
+			    	logger.info("********** API  getProducts for 0 Id productList ******** Start"+productList.size());
+
+		    	}
+		    	else if (subCategoryId!=0) {
 		    		productList.clear();
 		    		productList= productService.getProductsById(categoryId,subCategoryId);
 				}
-		    	else {
+		    	else if(categoryId!=0){
 		    		productList.clear();
 		    		productList= productService.getProductsByCategoryId(categoryId);
 
 		    	}
-						if(!productList.isEmpty()) {
+		    	 if(!productList.isEmpty()) {
 							
 					    	logger.info("********** API  getProductsById ******** End"+"CatId:"+categoryId+" SubCatId"+subCategoryId);
 							responseEntity.setStatusCode("200");
 							responseEntity.setMessage("Success");
 							responseEntity.setList((ArrayList)productList);
 						}
-						else {
+						else{
 							productList.clear();
 					    	logger.info("********** API  getProductsById from else ******** End"+"CatId:"+categoryId+" SubCatId"+subCategoryId);
 							responseEntity.setStatusCode("500");
 							responseEntity.setMessage("Failed to fetch products");
 							responseEntity.setList((ArrayList)productList);
+					    	logger.info("********** API  getProductsById else ******** End"+productList.size());
 						}
 			} catch (Exception e) {
+		    	logger.info("**********ERROR API  getProductsById ******** End"+productList.size());
+
 				// TODO: handle exception
 			}			
 			return responseEntity;

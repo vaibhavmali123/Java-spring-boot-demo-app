@@ -58,8 +58,18 @@ public class ProductService {
 
     	product.setSubcategory(subcategory);
     	product.setQuantity(productRequestDTO.getQuantity());
-    	product.setComment(productRequestDTO.getComment());
+    	product.setAvailableQuantity(productRequestDTO.getQuantity());
     	
+    	product.setComment(productRequestDTO.getComment());
+    	product.setQuantity(productRequestDTO.getQuantity());
+    	
+    	product.setItemType(productRequestDTO.getItemType());
+    	product.setLowStock(productRequestDTO.getLowStock());
+    	product.setPurchasePrice(productRequestDTO.getPurchasePrice());
+    	product.setTax(productRequestDTO.getTax());
+    	product.setUnit(productRequestDTO.getUnit());
+
+
     	Product productrs=productRepository.save(product);
 
     	ProductAudit productAudit=new ProductAudit();
@@ -97,13 +107,65 @@ public class ProductService {
     		productsResponseDTO.setProductId(product.getProductId());
     		productsResponseDTO.setPrice(product.getPrice());
     		productsResponseDTO.setQuantity(product.getQuantity());
+    		productsResponseDTO.setAvailableQuantity(product.getAvailableQuantity());
     		productsResponseDTO.setComment(product.getComment());
+
+    		productsResponseDTO.setItemType(product.getItemType());
+    		productsResponseDTO.setLowStock(product.getLowStock()==null?"0":product.getLowStock());
+    		productsResponseDTO.setPurchasePrice(product.getPurchasePrice());
+    		productsResponseDTO.setUnit(product.getUnit());
+    		productsResponseDTO.setTax(product.getTax());
+
     		
     		productsListResponse.add(productsResponseDTO);
     	}
     	return productsListResponse;
     }
 
+    public List<ProductsResponseDTO> getAllItems() {
+    	
+    List<ProductsResponseDTO>productsListResponse =  new ArrayList<ProductsResponseDTO>();
+    
+    	List<Product>productsList=productRepository.findAllItems();
+    	
+    	logger.info("**********  Product service get items by 0 ******** "+productsList.size());
+
+    	try {
+
+        	for(Product product:productsList) {
+        		
+        		ProductsResponseDTO productsResponseDTO=new ProductsResponseDTO();
+        		
+        		
+        		productsResponseDTO.setCategoryId(product.getCategory()==null?0:product.getCategory().getCategoryId());
+        		//prodSuctsResponseDTO.setSubCategoryId(product.getSubcategory().getCategoryId());
+        		
+        		productsResponseDTO.setProductName(product.getProductName());
+        		//productsResponseDTO.setProductImage(product.getProductImage());
+        		productsResponseDTO.setProductId(product.getProductId());
+        		productsResponseDTO.setPrice(product.getPrice());
+        		productsResponseDTO.setQuantity(product.getQuantity());
+        		productsResponseDTO.setAvailableQuantity(product.getAvailableQuantity());
+        		productsResponseDTO.setComment(product.getComment());
+
+        		productsResponseDTO.setItemType(product.getItemType());
+        		productsResponseDTO.setLowStock(product.getLowStock()==null?"0":product.getLowStock());
+        		productsResponseDTO.setPurchasePrice(product.getPurchasePrice());
+        		productsResponseDTO.setUnit(product.getUnit());
+        		productsResponseDTO.setTax(product.getTax());
+
+        		
+        		productsListResponse.add(productsResponseDTO);
+        	}
+    	}
+    	catch(Exception e) {
+        	logger.info("**********  ERROR ********"+e.getMessage());
+	
+    	}
+    	return productsListResponse;
+    }
+
+    
     public List<ProductsResponseDTO> getProductsByCategoryId(int categoryId) {
     	
     	logger.info("********** API  getProductsByCategoryId Service ******** Start");
@@ -125,7 +187,17 @@ public class ProductService {
     		productsResponseDTO.setProductId(product.getProductId());
     		productsResponseDTO.setPrice(product.getPrice());
     		productsResponseDTO.setQuantity(product.getQuantity());
+    		productsResponseDTO.setAvailableQuantity(product.getAvailableQuantity());
     		productsResponseDTO.setComment(product.getComment());
+    		
+        	logger.info("********** API  getLowStock ******** END"+product.getLowStock());
+
+    		productsResponseDTO.setItemType(product.getItemType());
+    		productsResponseDTO.setLowStock(product.getLowStock()==null?"0":product.getLowStock());
+    		productsResponseDTO.setPurchasePrice(product.getPurchasePrice());
+    		productsResponseDTO.setUnit(product.getUnit());
+    		productsResponseDTO.setTax(product.getTax());
+
         	logger.info("********** API  qty ******** END"+product.getQuantity());
 
     		productsListResponse.add(productsResponseDTO);
@@ -136,12 +208,13 @@ public class ProductService {
     }
 
 	public int updateProduct(ProductRequestDTO productRequestDTO, int productId) {
-		
-	int result= productRepository.updateProductById(productId, productRequestDTO.getProductName(),
-				productRequestDTO.getPrice(),productRequestDTO.getQuantity(),productRequestDTO.getComment());
-	
+			
 	Product product=new Product();
 	product=productRepository.findById(productId);
+	
+	int result= productRepository.updateProductById(productId, productRequestDTO.getProductName(),
+			productRequestDTO.getPrice(),productRequestDTO.getQuantity(),productRequestDTO.getComment(),productRequestDTO.getQuantity());
+
 	logger.info("********** API  updateProduct Service ******** END"+productRequestDTO.getQuantity());
 
 	ProductAudit productAudit=new ProductAudit();

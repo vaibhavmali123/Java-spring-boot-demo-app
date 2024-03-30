@@ -87,11 +87,15 @@ public class OrderService {
         			List<Product> productsList=productRepository.findProductByProductID(orderItem.getProduct().getProductId());
         			for(Product product:productsList)
         			{
+        		    	logger.info("********** getProductName  getAllOrders ********"+productResponse.getProductName());
+
         				productResponse.setProductName(product.getProductName());
         				productResponse.setPrice(product.getPrice());
-        				productResponse.setProductName(product.getComment());
+        				productResponse.setComment(product.getComment());
         				productResponse.setProductId(product.getProductId());
         				productResponse.setProductImage(product.getProductImage());
+
+        		    	logger.info("********** getProductName  getAllOrders ********"+productResponse.getProductName());
 
         			}
                 	ordersResponseDTO.setProductsResponseDTO(productResponse);
@@ -146,7 +150,10 @@ public class OrderService {
              orderItem.setOrders(ordersItem);
         	 orderItemRepository.save(orderItem);
         	 
-        	 productRepository.updateProductQuantityById(productItem.getProductId(),productItem.getQuantity());
+          	logger.info("********** Service saveOrders ******** Available QTY: "+productItem.getAvailableQuantity());
+          	logger.info("********** Service saveOrders ******** Order QTY: "+orderItem.getQuantity());
+
+        	 productRepository.updateProductQuantityById(productItem.getProductId(),productItem.getAvailableQuantity()-orderItem.getQuantity());
         	 
         	 ProductAudit pAudit=new ProductAudit();
         	  pAudit=productAuditRepository.findByProductId(productItem.getProductId());

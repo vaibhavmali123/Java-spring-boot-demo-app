@@ -24,8 +24,8 @@ public interface ProductRepository extends CrudRepository<Product,Integer>{
 
     @Modifying(clearAutomatically = true)
     @Transactional
-    @Query(value =  "UPDATE product p SET p.quantity=:quantity WHERE p.product_id=:product_id",nativeQuery = true)
-    int updateProductQuantityById(@Param("product_id") int product_id,@Param("quantity") int quantity);
+    @Query(value =  "UPDATE product p SET p.available_quantity=:availableQuantity WHERE p.product_id=:product_id",nativeQuery = true)
+    int updateProductQuantityById(@Param("product_id") int product_id,@Param("availableQuantity") int availableQuantity);
 
     @Query(value = "SELECT * FROM product WHERE category_id=:categoryId and sub_category_id=:subCategoryId",nativeQuery = true)
 	List<Product>findAllById(@Param("categoryId") int categoryId,@Param("subCategoryId") int subCategoryId);
@@ -33,13 +33,16 @@ public interface ProductRepository extends CrudRepository<Product,Integer>{
     @Query(value = "SELECT * FROM product WHERE category_id=:categoryId",nativeQuery = true)
    	List<Product>findAllBycategoryId(@Param("categoryId") int categoryId);
 
+    @Query(value = "SELECT * FROM product",nativeQuery = true)
+   	List<Product>findAllItems();
+    
     @Query(value = "SELECT * FROM product WHERE product_id=:product_id",nativeQuery = true)
    	List<Product>findProductByProductID(@Param("product_id") int product_id);
 
     @Modifying(clearAutomatically = true)
     @Transactional
-    @Query(value =  "UPDATE product p SET p.quantity=:quantity,p.product_name=:productName,p.price=:price,p.quantity=:quantity,p.comment=:comment WHERE p.product_id=:product_id",nativeQuery = true)
-	public int updateProductById(int product_id, String productName, int price, int quantity, String comment);
+    @Query(value =  "UPDATE product p SET p.available_quantity=:availableQuantity,p.quantity=:quantity,p.product_name=:productName,p.price=:price,p.quantity=:quantity,p.comment=:comment WHERE p.product_id=:product_id",nativeQuery = true)
+	public int updateProductById(int product_id, String productName, int price, int quantity, String comment,@Param("availableQuantity")int availableQuantity);
     
 
 }
